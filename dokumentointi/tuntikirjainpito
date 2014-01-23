@@ -6,4 +6,7 @@ Tuntikirjainpito
 17.1	luokkakaavion hahmotus						0.5h
 20.1	ohjelmointia, luokkien hahmottelua luokkakaavion tueksi		0.5h
 21.1	luokkakaavion viimeistely					0.5h
-22.1 	ohjelmointia, pelilogiika ja käyttöliittymä			1h
+22.1 	ohjelmointia; pelilogiika ja käyttöliittymä			1h
+23.1 	ohjelmointia ja javan syntaxin googlettamista; 
+	en keksinny miten kirjoittaa testit metodeille, joiden 
+	tulos on randomoitu						6h
