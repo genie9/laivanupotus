@@ -23,7 +23,7 @@ public class PelaajaTest {
 
     @Test
     public void arpoLaivaPysyyAlueellaTest() {
-        Laiva uusi = pelaaja.arpoLaiva(3);
+        Laiva uusi = pelaaja.arvoLaiva(3);
         int xend = uusi.getKoko() - 1 + uusi.getX();
         int yend = uusi.getKoko() - 1 + uusi.getY();
 
@@ -32,12 +32,12 @@ public class PelaajaTest {
 
         @Test
     public void arpoLaivaKoollaOnValiaTest() {
-        assertNull( pelaaja.arpoLaiva(-3));
+        assertNull( pelaaja.arvoLaiva(-3));
     }
     
             @Test
     public void asetaLaivaKoollaOnValiaTest() {
-        assertNull( pelaaja.arpoLaiva(-3));
+        assertNull( pelaaja.arvoLaiva(-3));
     }
     
     @Test
@@ -74,8 +74,8 @@ public class PelaajaTest {
     
     @Test
     public void arpoLaivaLisaaLaivastoonOikeinTest() {
-        pelaaja.arpoLaiva(4);
-        pelaaja.arpoLaiva(3);
+        pelaaja.arvoLaiva(4);
+        pelaaja.arvoLaiva(3);
          assertSame(2, pelaaja.getLaivasto().size());
     }
 }

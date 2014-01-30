@@ -24,28 +24,31 @@ public class Pelaaja {
                 int x = r.nextInt(10 - koko + 1);
                 int y = r.nextInt(10);
                 int xend = x + koko - 1;
-                Laiva laiva = new Laiva(x, y, koko, suunta);
+
                 if (xend < alue.length && x >= 0 && y >= 0 && y < alue.length) {
                     if (merkkaaXlle(x, y, xend)) {
+                        Laiva laiva = new Laiva(x, y, koko, suunta);
                         laivasto.add(laiva);
                         return laiva;
                     }
+                    return arvoLaiva(koko);
                 }
             } else {                                                //jos arvottu vaakaan
                 int x = r.nextInt(10);
                 int y = r.nextInt(10 - koko + 1);
                 int yend = y + koko - 1;
-                Laiva laiva = new Laiva(x, y, koko, suunta);
+
                 if (x < alue.length && x >= 0 && y >= 0 && yend < alue.length) {
                     if (merkkaaYlle(x, y, yend)) {
+                        Laiva laiva = new Laiva(x, y, koko, suunta);
                         laivasto.add(laiva);
                         return laiva;
                     }
+                    return arvoLaiva(koko);
                 }
             }
-            
         }
-        return arvoLaiva(koko);
+        return null;
     }
 
     public Laiva asetaLaiva(int x, int y, int koko, boolean suunta) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
