@@ -1,6 +1,7 @@
 package laivanupotus.ui;
 
 import java.util.Scanner;
+import laivanupotus.logiikka.Laiva;
 import laivanupotus.logiikka.Pelaaja;
 
 public class Kayttoliittyma {
@@ -29,5 +30,16 @@ public class Kayttoliittyma {
         if (lukija.nextInt() == 2) {
         }
 
+    }
+    
+    public boolean ammu(int x, int y) {
+        for (Laiva laiva : pelaaja1.getLaivasto()) {
+            if (x == laiva.getX() && y == laiva.getY()) {
+                laiva.setKunto(laiva.getKunto() - 1);
+                return true;
+            }
+        }
+        pelaaja1.getAlue()[x][y] = -1;
+        return false;
     }
 }

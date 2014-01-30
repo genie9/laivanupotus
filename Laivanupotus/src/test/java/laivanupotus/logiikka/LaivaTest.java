@@ -15,6 +15,6 @@ public class LaivaTest {
     
      @Test
      public void konstruktoriAsettaaArvotOikein() {
-         assertEquals("x = 4, y = 5, koko = 4, suunta = true", laiva.toString());
+         assertEquals("x = 4, y = 5, koko = 4, suunta = vertical", laiva.toString());
      }
 }

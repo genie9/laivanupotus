@@ -1,4 +1,4 @@
-Tuntikirjainpito
+﻿Tuntikirjainpito
 
 15.1	luotu repo githubiin ja ssh avaimet				1h
 16.1	luotu neatbeansprojekti ja päivitetty projektihakemisto		1h
@@ -12,4 +12,5 @@ Tuntikirjainpito
 	tulos on randomoitu						6h
 27.1	ohjelmointia; rupee näyttää siltä että en tarvitse kuin kaksi
 	luokkaa logiikalle						0.5h
-
+30.1	pelaajalle metodeja laivojen sijoittamiseksi; testausta		6h
+30.1	testien tekemistä						3h					

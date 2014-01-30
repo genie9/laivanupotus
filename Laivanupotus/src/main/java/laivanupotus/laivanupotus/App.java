@@ -1,5 +1,6 @@
 package laivanupotus.laivanupotus;
 
+import laivanupotus.logiikka.Laiva;
 import laivanupotus.logiikka.Pelaaja;
 
 public class App {
@@ -21,16 +22,16 @@ public class App {
             System.out.println("");
         }
 
+        for (Laiva laiva : pelaaja.getLaivasto()) {
+                System.out.println(laiva);
+            }
+            System.out.println("");
+        
+        
         System.out.println("");
         
         Pelaaja r2d2 = new Pelaaja("r2d2", 10);
 
-//        for (int i = 0; i < 5; i++) {
-//            r2d2.arpoLaiva(i);
-//            if (!r2d2.arpoLaiva(i)) {
-//                i--;
-//            }
-//        }
         r2d2.arpoLaiva(5);
         r2d2.arpoLaiva(4);
         r2d2.arpoLaiva(3);

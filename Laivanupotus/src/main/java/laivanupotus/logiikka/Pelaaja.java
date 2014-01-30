@@ -8,7 +8,7 @@ public class Pelaaja {
     private final Random r;
     private final String name;
     private int[][] alue;
-    private ArrayList<Laiva> laivasto;              //toistaiseksi kaiken varalta
+    private ArrayList<Laiva> laivasto;
 
     public Pelaaja(String name, int sivu) {
         this.r = new Random();
@@ -17,53 +17,59 @@ public class Pelaaja {
         this.laivasto = new ArrayList<>();
     }
 
-    public boolean arpoLaiva(int koko) {            //tekoälylle
-        boolean suunta = r.nextBoolean();           
-
-        if (suunta) {                                           //jos arvottu pystyyn
-            int x = r.nextInt(10 - koko + 1);
-            int y = r.nextInt(10);
-            int xend = x + koko - 1;                    
-            Laiva laiva = new Laiva(x, y, koko, suunta);
-            if (xend < alue.length && x >= 0 && y >= 0 && y < alue.length) {
-                if (merkkaaXlle(x, y, xend)) {
-                    laivasto.add(laiva);
-                    return true;
+    public Laiva arpoLaiva(int koko) {            //tekoälylle
+        if (koko >= 0 && koko < alue.length) {
+            boolean suunta = r.nextBoolean();
+            if (suunta) {                                           //jos arvottu pystyyn
+                int x = r.nextInt(10 - koko + 1);
+                int y = r.nextInt(10);
+                int xend = x + koko - 1;
+                Laiva laiva = new Laiva(x, y, koko, suunta);
+                if (xend < alue.length && x >= 0 && y >= 0 && y < alue.length) {
+                    if (merkkaaXlle(x, y, xend)) {
+                        laivasto.add(laiva);
+                        return laiva;
+                    }
                 }
-            }
-        } else {                                                //jos arvottu vaakaan
-            int x = r.nextInt(10);
-            int y = r.nextInt(10 - koko + 1);
-            int yend = y + koko - 1;
-            Laiva laiva = new Laiva(x, y, koko, suunta);
-            if (x < alue.length && x >= 0 && y >= 0 && yend < alue.length) {
-                if (merkkaaYlle(x, y, yend)) {
-                    laivasto.add(laiva);
-                    return true;
+            } else {                                                //jos arvottu vaakaan
+                int x = r.nextInt(10);
+                int y = r.nextInt(10 - koko + 1);
+                int yend = y + koko - 1;
+                Laiva laiva = new Laiva(x, y, koko, suunta);
+                if (x < alue.length && x >= 0 && y >= 0 && yend < alue.length) {
+                    if (merkkaaYlle(x, y, yend)) {
+                        laivasto.add(laiva);
+                        return laiva;
+                    }
                 }
             }
         }
-        return false;
+        return null;
     }
 
-    public void asetaLaiva(int x, int y, int koko, boolean suunta) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
-        Laiva laiva = new Laiva(x, y, koko, suunta);
+    public Laiva asetaLaiva(int x, int y, int koko, boolean suunta) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
+        if (koko >= 0 && koko < alue.length) {
+            Laiva laiva = new Laiva(x, y, koko, suunta);
 
-        if (suunta) {
-            int xend = x + koko - 1;
-            if (xend < alue.length && x >= 0 && y >= 0 && y < alue.length) {
-                if (merkkaaXlle(x, y, xend)) {
-                    laivasto.add(laiva);
+            if (suunta) {
+                int xend = x + koko - 1;
+                if (xend < alue.length && x >= 0 && y >= 0 && y < alue.length) {
+                    if (merkkaaXlle(x, y, xend)) {
+                        laivasto.add(laiva);
+                        return laiva;
+                    }
                 }
-            }
-        } else {
-            int yend = y + koko - 1;
-            if (x < alue.length && x >= 0 && y >= 0 && yend < alue.length) {
-                if (merkkaaYlle(x, y, yend)) {
-                    laivasto.add(laiva);
+            } else {
+                int yend = y + koko - 1;
+                if (x < alue.length && x >= 0 && y >= 0 && yend < alue.length) {
+                    if (merkkaaYlle(x, y, yend)) {
+                        laivasto.add(laiva);
+                        return laiva;
+                    }
                 }
             }
         }
+        return null;
     }
 
     private boolean merkkaaXlle(int x, int y, int end) {        //apumetodi laivojen asettamiselle pystysuuntaan
@@ -88,16 +94,8 @@ public class Pelaaja {
         return false;
     }
 
-    //tämä ehkä käyttöliitymälle
-    public boolean ammu(int x, int y) {
-        for (Laiva laiva : laivasto) {
-            if (x == laiva.getX() && y == laiva.getY()) {
-                laiva.setKunto(laiva.getKunto() - 1);
-                return true;
-            }
-        }
-        this.alue[x][y] = -1;
-        return false;
+    public ArrayList<Laiva> getLaivasto() {
+        return laivasto;
     }
 
     public int[][] getAlue() {
