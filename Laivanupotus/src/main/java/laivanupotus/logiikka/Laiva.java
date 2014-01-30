@@ -18,11 +18,11 @@ public class Laiva {
         pitäisi olla koordinaatteina ja
         kentän reunat otetaan huomioon
         */
-        if (this.suunta) {                          
-            this.turvaAlue = new int[3][koko + 2];  
-        } else {                                    
-            this.turvaAlue = new int[koko + 2][3];  
-        }
+//        if (this.suunta) {                          
+//            this.turvaAlue = new int[3][koko + 2];  
+//        } else {                                    
+//            this.turvaAlue = new int[koko + 2][3];  
+//        }
     }
     
     public int getX(){
@@ -43,6 +43,10 @@ public class Laiva {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setKoko(int koko) {
+        this.koko = koko;
     }
 
     @Override

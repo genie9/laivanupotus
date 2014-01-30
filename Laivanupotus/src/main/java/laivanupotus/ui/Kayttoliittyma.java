@@ -6,8 +6,8 @@ import laivanupotus.logiikka.Pelikentta;
 
 public class Kayttoliittyma {
 
-    private Pelikentta pelaaja1Kentta;
-    private Pelikentta pelaaja2Kentta;
+//    private Pelikentta pelaaja1Kentta;
+//    private Pelikentta pelaaja2Kentta;
     public Scanner lukija;
     private Pelaaja pelaaja1;
     private Pelaaja pelaaja2;
