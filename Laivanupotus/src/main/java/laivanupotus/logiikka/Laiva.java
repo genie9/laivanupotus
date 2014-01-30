@@ -7,12 +7,14 @@ public class Laiva {
     private int koko;
     private boolean suunta;
     private int[][] turvaAlue;
+    private int kunto;
 
     public Laiva(int x, int y, int koko, boolean suunta) {
         this.x = x;
         this.y = y;
         this.koko = koko;
         this.suunta = suunta;
+        this.kunto = koko;
     
         /*tämä vielä kesken,
         pitäisi olla koordinaatteina ja
@@ -37,6 +39,10 @@ public class Laiva {
         return koko;
     }
 
+    public int getKunto() {
+        return kunto;
+    }
+
     public void setX(int x) {
         this.x = x;
     }
@@ -47,6 +53,10 @@ public class Laiva {
 
     public void setKoko(int koko) {
         this.koko = koko;
+    }
+
+    public void setKunto(int kunto) {
+        this.kunto = kunto;
     }
 
     @Override
