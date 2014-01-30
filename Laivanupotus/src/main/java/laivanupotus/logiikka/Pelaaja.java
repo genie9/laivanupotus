@@ -17,7 +17,7 @@ public class Pelaaja {
         this.laivasto = new ArrayList<>();
     }
 
-    public Laiva arpoLaiva(int koko) {            //tekoälylle
+    public Laiva arvoLaiva(int koko) {            //tekoälylle
         if (koko >= 0 && koko < alue.length) {
             boolean suunta = r.nextBoolean();
             if (suunta) {                                           //jos arvottu pystyyn
@@ -43,8 +43,9 @@ public class Pelaaja {
                     }
                 }
             }
+            
         }
-        return null;
+        return arvoLaiva(koko);
     }
 
     public Laiva asetaLaiva(int x, int y, int koko, boolean suunta) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva

@@ -32,11 +32,17 @@ public class App {
         
         Pelaaja r2d2 = new Pelaaja("r2d2", 10);
 
-        r2d2.arpoLaiva(5);
-        r2d2.arpoLaiva(4);
-        r2d2.arpoLaiva(3);
-        r2d2.arpoLaiva(2);
-        r2d2.arpoLaiva(2);
+//        for (int i = 0; i < 5; i++) {
+//            r2d2.arpoLaiva(i);
+//            if (r2d2.arpoLaiva(i) == null) {
+//                null;
+//            }
+//        }
+        r2d2.arvoLaiva(5);
+        r2d2.arvoLaiva(4);
+        r2d2.arvoLaiva(3);
+        r2d2.arvoLaiva(2);
+        r2d2.arvoLaiva(2);
 
         for (int[] alue : r2d2.getAlue()) {
             for (int j = 0; j < r2d2.getAlue().length; j++) {
