@@ -42,6 +42,14 @@
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
             <version>0.30</version>
+            <configuration>
+        <targetClasses>
+            <param>laivanupotus.logiikka.*</param>
+        </targetClasses>
+        <targetTests>
+            <param>laivanupotus.logiikka.*</param>
+        </targetTests>
+    </configuration>
         </plugin>
     </plugins>
 </build>
