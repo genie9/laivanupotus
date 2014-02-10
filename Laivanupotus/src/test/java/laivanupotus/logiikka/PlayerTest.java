@@ -50,18 +50,27 @@ public class PlayerTest {
     }
 
     @Test
-    public void arpoLaivaKoollaOnValiaTest() {
+    public void arvoLaivaKoollaOnValiaTest1() {
         assertNull(red.arvoLaiva(-3));
     }
 
     @Test
-    public void asetaLaivaKoollaOnValiaTest() {
-        assertNull(red.arvoLaiva(-3));
+    public void arvoLaivaKoollaOnValiaTest2() {
+        assertNull(red.arvoLaiva(10));
+    }
+    
+    @Test
+    public void asetaLaivaKoollaOnValiaTest1() {
+        assertNull(red.asetaLaiva(1, 1, 10, true));
+    }
+    @Test
+    public void asetaLaivaKoollaOnValiaTest2() {
+        assertNull(red.asetaLaiva(1, 1, -3, true));
     }
 
     @Test
     public void asetaLaivaPalauttaaNullVaarillaArvoillaTest() {
-        assertEquals(null, red.asetaLaiva(10, 10, 1, true));
+        assertEquals(null, red.asetaLaiva(10, 10, 1, false));
     }
 
     @Test
@@ -101,19 +110,20 @@ public class PlayerTest {
 
     @Test
     public void shootOsuessaanPalauttaaTrueTest() {
-        black.asetaLaiva(0, 0, 1, true);
+        black.asetaLaiva(0, 0, 3, true);
         assertTrue(red.shoot(black, 0, 0));
     }
 
     @Test
     public void shootEiOsuessaanPalauttaaFalseTest() {
         black.asetaLaiva(0, 0, 1, true);
+        red.shoot(black, 0, 1);
         assertFalse(red.shoot(black, 0, 1));
     }
 
     @Test
     public void shootTappaessaanPoistaaLaivanLaivastostaTest() {
-//        black.asetaLaiva(0, 0, 1, true);
+        black.asetaLaiva(0, 0, 1, true);
         red.shoot(black, 0, 0);
         assertEquals(0, black.getFleat().size());
     }

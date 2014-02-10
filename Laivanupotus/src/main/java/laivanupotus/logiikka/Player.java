@@ -10,6 +10,11 @@ public class Player {
     private char[][] area;
     private ArrayList<Ship> fleat;
 
+    /**
+     *
+     * @param name
+     * @param side
+     */
     public Player(String name, int side) {
         this.r = new Random();
         this.name = name;
@@ -22,6 +27,15 @@ public class Player {
         this.fleat = new ArrayList<>();
     }
 
+    /**
+     * Metodi arpoo tietyn kokoisen laivan sijainnin.
+     * 
+     * @param size Syöte laivan koolle
+     * 
+     * @return Ship Palauttaa Laivan onnistuessaan; palauttaa itsensä jos 
+     *              sijainti ei täytä vaatimuksia; väärillä syötteillä
+     *              palautetaan null.
+     */
     public Ship arvoLaiva(int size) {            //tekoälylle
         if (size >= 0 && size < area.length) {
             boolean orientation = r.nextBoolean();
@@ -56,6 +70,16 @@ public class Player {
         return null;
     }
 
+    /**
+     *Metodi asettaa laivan haluttuun sijaintiin.
+     * 
+     * @param x Käyttäjän antama koordinaatti
+     * @param y Käyttäjän antama koordinaatti
+     * @param size Käyttäjän antama laivan koko
+     * @param orientation Käyttäjän antama laivan suunta
+     * @return  Laiva Palauttaa laivan onnistuessaan, muuten null
+     * 
+     */
     public Ship asetaLaiva(int x, int y, int size, boolean orientation) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
         if (size >= 0 && size < area.length) {
             Ship laiva = new Ship(x, y, size, orientation);
@@ -103,13 +127,20 @@ public class Player {
         return false;
     }
 
+    /**
+     *
+     * @param p
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean shoot(Player p, int x, int y) {
         for (Ship ship : p.getFleat()) {
             if (ship.isHit(x, y)) {
                 ship.setHealth(ship.getHealth() - 1);
                 if (ship.getHealth() == 0) {
-                    fleat.remove(ship);
-                    System.out.println("Ship is destroyed!");
+                    p.getFleat().remove(ship);
+                    System.out.println("The ship is destroyed!");
                 }
                 p.getArea()[x][y] = 'X';
                 return true;
@@ -119,24 +150,39 @@ public class Player {
         return false;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Ship> getFleat() {
         return fleat;
     }
 
+    /**
+     *
+     * @param p
+     */
     public void printFleat(Player p) {
         for (Ship ship : p.getFleat()) {
             System.out.println(ship);
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public char[][] getArea() {
         return area;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
-
 }
 
 //    private void turvaAlue(){
