@@ -17,4 +17,4 @@
 6.2	tekstikäyttöliittymän ohjelmointia, alkaa olla pääosin valmista,
 	mutta vastustajat toistaiseksi näkevät toistensa alueet; 	9h
 	hieman guin alustamista; lisää testeja				2h
-
+9.2	testeja ja luokkakaavion hiomista				2h

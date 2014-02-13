@@ -47,7 +47,7 @@ public class TextUI {
     }
 
     private void placeShips(Player p) {
-        for (int i = 2; i >= 0; i--) {
+        for (int i = 1; i >= 0; i--) {
             int size = i;
             if (i < 3) {
                 if (i == 0) {
@@ -137,9 +137,7 @@ public class TextUI {
                 System.out.println("The victory is your admiral " + player2.getName() + " !!!");
                 break;
             }
-
         }
-
     }
 
     private void printSituation(Player p) {
@@ -149,6 +147,8 @@ public class TextUI {
             }
             System.out.println("");
         }
+        System.out.println(player1.getFleat().size());
+        System.out.println(player2.getFleat().size());
     }
 
     /* creating AI player */
