@@ -38,14 +38,14 @@ public class PlayerTest {
     @Test
     public void arvoLaivaEiLisaaLaivastoaNegatiivisillaTest() {
         Ship uusi = red.arvoLaiva(-1);
-        int laivastonKoko = red.getFleat().size();
+        int laivastonKoko = red.getFleet().size();
         assertEquals(0, laivastonKoko);
     }
 
     @Test
     public void arvoLaivaEiLisaaLaivastoaYliAlueenArvoillaTest() {
         Ship uusi = red.arvoLaiva(11);
-        int laivastonKoko = red.getFleat().size();
+        int laivastonKoko = red.getFleet().size();
         assertEquals(0, laivastonKoko);
     }
 
@@ -97,7 +97,7 @@ public class PlayerTest {
 //        red.asetaLaiva(0, 3, 3, true).toString();
         red.asetaLaiva(2, 2, 3, false).toString();
 
-        assertSame(2, red.getFleat().size());
+        assertSame(2, red.getFleet().size());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class PlayerTest {
         red.arvoLaiva(4);
         red.arvoLaiva(3);
         red.arvoLaiva(-3);
-        assertSame(2, red.getFleat().size());
+        assertSame(2, red.getFleet().size());
     }
 
     @Test
@@ -125,6 +125,6 @@ public class PlayerTest {
     public void shootTappaessaanPoistaaLaivanLaivastostaTest() {
         black.asetaLaiva(0, 0, 1, true);
         red.shoot(black, 0, 0);
-        assertEquals(0, black.getFleat().size());
+        assertEquals(0, black.getFleet().size());
     }
 }

@@ -8,7 +8,7 @@ public class Player {
     private final Random r;
     private final String name;
     private char[][] area;
-    private ArrayList<Ship> fleat;
+    private ArrayList<Ship> fleet;
 
     /**
      *
@@ -24,7 +24,7 @@ public class Player {
                 area[i][j] = '.';
             }
         }
-        this.fleat = new ArrayList<>();
+        this.fleet = new ArrayList<>();
     }
 
     /**
@@ -47,7 +47,7 @@ public class Player {
                 if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
                     if (merkkaaXlle(x, y, xend)) {
                         Ship laiva = new Ship(x, y, size, orientation);
-                        fleat.add(laiva);
+                        fleet.add(laiva);
                         return laiva;
                     }
                     return arvoLaiva(size);
@@ -60,7 +60,7 @@ public class Player {
                 if (x < area.length && x >= 0 && y >= 0 && yend < area.length) {
                     if (merkkaaYlle(x, y, yend)) {
                         Ship laiva = new Ship(x, y, size, orientation);
-                        fleat.add(laiva);
+                        fleet.add(laiva);
                         return laiva;
                     }
                     return arvoLaiva(size);
@@ -88,7 +88,7 @@ public class Player {
                 int xend = x + size - 1;
                 if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
                     if (merkkaaXlle(x, y, xend)) {
-                        fleat.add(laiva);
+                        fleet.add(laiva);
                         return laiva;
                     }
                 }
@@ -96,7 +96,7 @@ public class Player {
                 int yend = y + size - 1;
                 if (x < area.length && x >= 0 && y >= 0 && yend < area.length) {
                     if (merkkaaYlle(x, y, yend)) {
-                        fleat.add(laiva);
+                        fleet.add(laiva);
                         return laiva;
                     }
                 }
@@ -135,11 +135,11 @@ public class Player {
      * @return
      */
     public boolean shoot(Player p, int x, int y) {
-        for (Ship ship : p.getFleat()) {
+        for (Ship ship : p.getFleet()) {
             if (ship.isHit(x, y)) {
                 ship.setHealth(ship.getHealth() - 1);
                 if (ship.getHealth() == 0) {
-                    p.getFleat().remove(ship);
+                    p.getFleet().remove(ship);
                     System.out.println("The ship is destroyed!");
                 }
                 p.getArea()[x][y] = 'X';
@@ -154,8 +154,8 @@ public class Player {
      *
      * @return
      */
-    public ArrayList<Ship> getFleat() {
-        return fleat;
+    public ArrayList<Ship> getFleet() {
+        return fleet;
     }
 
     /**
@@ -163,7 +163,7 @@ public class Player {
      * @param p
      */
     public void printFleat(Player p) {
-        for (Ship ship : p.getFleat()) {
+        for (Ship ship : p.getFleet()) {
             System.out.println(ship);
         }
     }

@@ -1,19 +1,20 @@
 package laivanupotus.graphics;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.basic.BasicBorders;
 
 
     public class Grid2 extends JPanel {
-
-        public Grid2() {
+        private char[][] area;
+        
+        public Grid2(char [][] area) {
+            this.area = area;
             setLayout(new GridBagLayout());
 
             GridBagConstraints gbc = new GridBagConstraints();
@@ -21,19 +22,19 @@ import javax.swing.border.MatteBorder;
                 for (int col = 0; col < 10; col++) {
                     gbc.gridx = col;
                     gbc.gridy = row;
-
-                    CellPane cellPane = new CellPane();
+             
+                    CellPane cellPane = new CellPane(col,row, this.area[col][row]);
                     Border border = null;
-                    if (row < 4) {
-                        if (col < 4) {
+                    if (row < 9) {
+                        if (col < 9) {
                             border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
                         } else {
                             border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
                         }
                     } else {
-                        if (col < 4) {
+                        if (col < 9) {
                             border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
-                        } else {
+                        } else { 
                             border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
                         }
                     }
@@ -42,4 +43,17 @@ import javax.swing.border.MatteBorder;
                 }
             }
         }
+
+        public void change(){
+            
+        }
+        public CellPane getCell(){
+            return (CellPane)getComponentAt(2,3);
+        }
+//    @Override
+//    public Component getComponentAt(int x, int y) {
+//        return super.getComponentAt(x, y); //To change body of generated methods, choose Tools | Templates.
+//    }
+        
+        
     }

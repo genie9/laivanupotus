@@ -82,8 +82,9 @@ public class TextUI {
     }
 
     private void play() {
+        boolean theEnd = false;
         mainLoop:
-        while (true) {
+        while (!theEnd) {
 
             /* player 1 shoots */
             System.out.println("Give your coordinates, admiral " + player1.getName());
@@ -99,16 +100,18 @@ public class TextUI {
                     continue;
                 }
                 if (player1.shoot(player2, x, y)) {
+                    /* checking for victory */
+                    if (player2.getFleet().isEmpty()) {
+                        System.out.println("The victory is your admiral " + player1.getName() + " !!!");
+                        theEnd = true;
+                        printSituation(player2);
+                        break mainLoop;
+                    }
                     System.out.println("It's a hit! You may shoot again.");
                     printSituation(player2);
                     continue;
                 }
                 printSituation(player2);
-                break;
-            }
-            /* checking for victory */
-            if (player2.getFleat().isEmpty()) {
-                System.out.println("The victory is your admiral " + player1.getName() + " !!!");
                 break;
             }
 
@@ -125,16 +128,18 @@ public class TextUI {
                     continue;
                 }
                 if (player2.shoot(player1, x, y)) {
+                    /* checking for victory */
+                    if (player1.getFleet().isEmpty()) {
+                        System.out.println("The victory is your admiral " + player2.getName() + " !!!");
+                        theEnd = true;
+                        printSituation(player1);
+                        break mainLoop;
+                    }
                     System.out.println("It's a hit! You may shoot again.");
                     printSituation(player1);
                     continue;
                 }
                 printSituation(player1);
-                break;
-            }
-            /* checking for victory */
-            if (player1.getFleat().isEmpty()) {
-                System.out.println("The victory is your admiral " + player2.getName() + " !!!");
                 break;
             }
         }
@@ -147,8 +152,8 @@ public class TextUI {
             }
             System.out.println("");
         }
-        System.out.println(player1.getFleat().size());
-        System.out.println(player2.getFleat().size());
+        System.out.println(player1.getFleet().size());
+        System.out.println(player2.getFleet().size());
     }
 
     /* creating AI player */

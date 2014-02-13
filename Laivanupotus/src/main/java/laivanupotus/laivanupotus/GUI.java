@@ -5,6 +5,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.*;
 import laivanupotus.graphics.Grid2;
+import laivanupotus.listeners.ShipRandomizerListener;
+import laivanupotus.logiikka.Player;
+//import laivanupotus.logiikka.Ship;
 //import javax.swing.BoxLayout;
 //import javax.swing.JFrame;
 //import javax.swing.JLabel;
@@ -13,8 +16,12 @@ import laivanupotus.graphics.Grid2;
 public class GUI implements Runnable {
 
     private JFrame frame;
+    private Player player1;
+    private Player player2;
 
     public GUI() {
+        player1 = new Player("Test", 10);
+        player2 = new Player("tapettava", 10);
     }
 
     @Override
@@ -28,8 +35,9 @@ public class GUI implements Runnable {
 
         frame.pack();
         frame.setLayout(new BorderLayout());
-        frame.add(new Grid2());
         frame.setVisible(true);
+        
+        
     }
 
     private void luoKomponentit(Container container) {
@@ -45,9 +53,19 @@ public class GUI implements Runnable {
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(red);
         buttonGroup.add(black);
-
+        
+        Grid2 p1 = new Grid2(player1.getArea());
+        Grid2 p2 = new Grid2(player2.getArea());
+        
+        JButton arpo = new JButton("Arpo laivat");
+        ShipRandomizerListener randomListener = new ShipRandomizerListener(player1, 5,frame);
+        arpo.addActionListener(randomListener);
+        
         container.add(red);
         container.add(black);
+        container.add(p1);
+        container.add(p2);
+        container.add(arpo);
     }
 
     public JFrame getFrame() {
