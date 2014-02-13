@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.*;
-import laivanupotus.graphics.Grid;
+import laivanupotus.graphics.Grid2;
 //import javax.swing.BoxLayout;
 //import javax.swing.JFrame;
 //import javax.swing.JLabel;
@@ -28,7 +28,7 @@ public class GUI implements Runnable {
 
         frame.pack();
         frame.setLayout(new BorderLayout());
-        frame.add(new Grid());
+        frame.add(new Grid2());
         frame.setVisible(true);
     }
 

@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class Grid extends JPanel {
 
-    private int columnCount = 5;
-    private int rowCount = 5;
+    private int columnCount = 10;
+    private int rowCount = 20;
     private List<Rectangle> cells;
     private Point selectedCell;
 

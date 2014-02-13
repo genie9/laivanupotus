@@ -8,9 +8,9 @@ import laivanupotus.ui.TextUI;
 public class App {
 
     public static void main(String[] args) {
-//        GUI w = new GUI();
+        GUI w = new GUI();
 
-//        SwingUtilities.invokeLater(w);
+        SwingUtilities.invokeLater(w);
         
         TextUI ui = new TextUI(10);
         
