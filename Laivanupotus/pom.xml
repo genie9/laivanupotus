@@ -30,6 +30,7 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
                 <version>2.5</version>
             </plugin>
