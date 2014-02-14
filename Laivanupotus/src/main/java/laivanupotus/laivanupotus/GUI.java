@@ -36,8 +36,7 @@ public class GUI implements Runnable {
         frame.pack();
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
-        
-        
+
     }
 
     private void luoKomponentit(Container container) {
@@ -45,27 +44,29 @@ public class GUI implements Runnable {
         container.setLayout(layout);
 
         container.add(new JLabel("Welcome to fight for your glory! \n"));
-        container.add(new JLabel("Choose your colour."));
-        
-        JButton red = new JButton("RED");
-        JButton black = new JButton("BLACK");
-        
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(red);
-        buttonGroup.add(black);
-        
+//        container.add(new JLabel("Choose your colour."));
+//        
+//        JButton red = new JButton("RED");
+//        JButton black = new JButton("BLACK");
+
+//        ButtonGroup buttonGroup = new ButtonGroup();
+//        buttonGroup.add(red);
+//        buttonGroup.add(black);
         Grid2 p1 = new Grid2(player1.getArea());
         Grid2 p2 = new Grid2(player2.getArea());
+
+        JButton randomize = new JButton("Create yor fleet!");
+        ShipRandomizerListener randomListener = new ShipRandomizerListener(player1, 5, p1);
+            
+            randomize.addActionListener(randomListener);
+
         
-        JButton arpo = new JButton("Arpo laivat");
-        ShipRandomizerListener randomListener = new ShipRandomizerListener(player1, 5,frame);
-        arpo.addActionListener(randomListener);
-        
-        container.add(red);
-        container.add(black);
+
+//        container.add(red);
+//        container.add(black);
         container.add(p1);
         container.add(p2);
-        container.add(arpo);
+        container.add(randomize);
     }
 
     public JFrame getFrame() {

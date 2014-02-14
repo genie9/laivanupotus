@@ -18,23 +18,29 @@ public class CellPane extends JPanel {
         this.x = x;
         this.y = y;
         this.state = state;
-        if(state == 'x'){
+        updateColour(state);
+
+    }
+
+    private void updateColour(char state) {
+        if (state == 'x') {
             background = Color.PINK;
-        }else if(state == 'S'){
+        } else if (state == 'S') {
             background = Color.BLACK;
-        }else if(state == 'X'){
+        } else if (state == 'X') {
             background = Color.ORANGE;
-        }else{
-            background = Color.getHSBColor(140.0f/255.0f, 90.0f/255.0f, 100.0f/255.0f);
+        } else {
+            background = Color.getHSBColor(145.0f / 255.0f, 175.0f / 255.0f, 125.0f / 255.0f);
         }
         defbg = background;
+        repaint();
     }
 
     public CellPane() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-             //   background = getBackground();
+                //   background = getBackground();
                 setBackground(Color.BLUE);
             }
 
@@ -45,12 +51,9 @@ public class CellPane extends JPanel {
         });
     }
 
-    public char getState() {
-        return state;
-    }
-
     public void setState(char state) {
-        this.state = state;
+        updateColour(state);
+
     }
 
     @Override
@@ -60,11 +63,10 @@ public class CellPane extends JPanel {
 
     @Override
     public void setBackground(Color bg) {
-                this.background = bg;
-                repaint();
+        this.background = bg;
+        repaint();
     }
 
-    
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(30, 30);
