@@ -53,9 +53,4 @@ public class Grid2 extends JPanel {
     public CellPane getCell(int coord) {
         return (CellPane) getComponent(coord);
     }
-//    @Override
-//    public Component getComponentAt(int x, int y) {
-//        return super.getComponentAt(x, y); //To update body of generated methods, choose Tools | Templates.
-//    }
-
 }

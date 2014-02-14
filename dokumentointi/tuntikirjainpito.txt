@@ -38,3 +38,4 @@
 	jatkuu...							2h
 
 14.2	Sekvenssikaavioita ja luokkakaavion päivitys			1h
+	Testit toimii taas; samalla vähän laivojen arpomisen korjailua	1h

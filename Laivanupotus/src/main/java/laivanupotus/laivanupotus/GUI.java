@@ -55,12 +55,10 @@ public class GUI implements Runnable {
         Grid2 p1 = new Grid2(player1.getArea());
         Grid2 p2 = new Grid2(player2.getArea());
 
-        JButton randomize = new JButton("Create yor fleet!");
+        JButton randomize = new JButton("Create yar fleet!");
         ShipRandomizerListener randomListener = new ShipRandomizerListener(player1, 5, p1);
-            
-            randomize.addActionListener(randomListener);
 
-        
+        randomize.addActionListener(randomListener);
 
 //        container.add(red);
 //        container.add(black);
