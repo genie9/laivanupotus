@@ -1,21 +1,5 @@
-laivanupotus
-============
+BATTLESHIPS
 
-OhHa
+FORTUNE FAVORS THE BRAVE!
 
-Aihe: Laivanupotus
-Toteutetaan vuoropohjainen graafinen peli Laivanupotus, jossa pelaaja pelaa tekoälyä vastaan. Ajan salliessa pyritään toteuttamaan kaksinpeli verkon välityksellä.
-
-Käyttäjät: Pelaaja/pelaajat
-
-Kaikkien käyttäjien toiminnot:
-- pelaajanimen valitseminen, ellei ole olemassa luo uuden
-- pelityypin vavitseminen: pvp tai p vs bot, laivojen määrän     mukaan (esim.5-10)
-- laivojen järjestäminen pelialueelle
-- ampumakoordinaattien valitseminen
-
-Tekoälyn toiminnot:
-- hahmon arpominen
-- laivojen järjestyksen arpominen pelialueelle
-- ampumakoordinaattien valitseminen
 
