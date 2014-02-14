@@ -1,6 +1,7 @@
 package laivanupotus.logiikka;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -8,12 +9,13 @@ public class Player {
     private final Random r;
     private final String name;
     private char[][] area;
-    private ArrayList<Ship> fleet;
+    private List<Ship> fleet;
 
     /**
-     *
-     * @param name
-     * @param side
+     * Konstruktori luo pelialueen ko. pelaajalle sekä
+     * laivasto(fleet)
+     * @param name Käyttäjän pelinimi
+     * @param side  Kentän koko
      */
     public Player(String name, int side) {
         this.r = new Random();
@@ -46,9 +48,9 @@ public class Player {
 
                 if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
                     if (merkkaaXlle(x, y, xend)) {
-                        Ship laiva = new Ship(x, y, size, orientation);
-                        fleet.add(laiva);
-                        return laiva;
+                        Ship ship = new Ship(x, y, size, orientation);
+                        fleet.add(ship);
+                        return ship;
                     }
                     return arvoLaiva(size);
                 }
@@ -105,8 +107,17 @@ public class Player {
         return null;
     }
 
-    private boolean merkkaaXlle(int x, int y, int end) {        //apumetodi laivojen asettamiselle pystysuuntaan
-        if (area[x][y] == '.') {                                 //&& area[x][y - 1] == 0 && area[x][y + 1] == 0 && area[x + 1][y] == 0
+    /**
+     * Apumetodi laivojen asettamiselle pystysuuntaan.
+     * Metodi päivittää pelialueetta, kun laivoja asetetaan/arvotaan.
+     * Samalla tarkistaa ettei laiva joudu varattuun paikkaan.
+     * @param x 
+     * @param y
+     * @param end
+     * @return true Onnistuessaan ja false, jos paikka on varattu
+     */
+    private boolean merkkaaXlle(int x, int y, int end) {        
+        if (area[x][y] == '.') {                               
             area[x][y] = 'S';
             if (end == x) {
                 return true;
@@ -116,7 +127,16 @@ public class Player {
         return false;
     }
 
-    private boolean merkkaaYlle(int x, int y, int end) {         //apumetodi laivojen asettamiselle vaakasuuntaan
+    /**
+     * Apumetodi laivojen asettamiselle vaakasuuntaan.
+     * Metodi päivittää pelialueetta, kun laivoja asetetaan/arvotaan.
+     * Samalla tarkistaa ettei laiva joudu varattuun paikkaan.
+     * @param x
+     * @param y
+     * @param end
+     * @return true Onnistuessaan ja false, jos paikka on varattu
+     */
+    private boolean merkkaaYlle(int x, int y, int end) {         
         if (area[x][y] == '.') {
             area[x][y] = 'S';
             if (end == y) {
@@ -128,11 +148,13 @@ public class Player {
     }
 
     /**
-     *
-     * @param p
-     * @param x
-     * @param y
-     * @return
+     * Metodi kutsuu laivaston(fleet) jokaiselle alukselle metodia isHit(),
+     * joka kertoo ampumisen onnistumisen tai epäonnistumisen.
+     * Onnistuessa, aluksen health päivitetään. Laivan tuhoutuessa laivastosta postetaan kyseinen alus.
+     * @param p Vastapelaaja
+     * @param x Käyttäjän antama x-coord
+     * @param y Käyttäjän antama y-coord
+     * @return true Onnistuessa, muuten false
      */
     public boolean shoot(Player p, int x, int y) {
         for (Ship ship : p.getFleet()) {
@@ -150,17 +172,13 @@ public class Player {
         return false;
     }
 
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Ship> getFleet() {
+    public List<Ship> getFleet() {
         return fleet;
     }
 
     /**
-     *
-     * @param p
+     *Testausta varten tulostaa laivaston kaikki alukset
+     * @param p Pelaaja
      */
     public void printFleat(Player p) {
         for (Ship ship : p.getFleet()) {
@@ -168,18 +186,10 @@ public class Player {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public char[][] getArea() {
         return area;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getName() {
         return name;
     }

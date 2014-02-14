@@ -16,9 +16,7 @@ public class Ship {
         this.orientation = orientation;
         this.health = size;
 
-        /*tämä vielä kesken,
-         pitäisi olla koordinaatteina ja
-         kentän reunat otetaan huomioon
+        /*turva-alue ei ole vielä implementoitu
          */
 //        for(int i = 0; i<koko; i++){
 //              if (this.suunta) {                          
@@ -50,21 +48,16 @@ public class Ship {
         return health;
     }
 
-//    public void setX(int x) {
-//        this.x = x;
-//    }
-//
-//    public void setY(int y) {
-//        this.y = y;
-//    }
-//
-//    public void setKoko(int size) {
-//        this.size = size;
-//    }
     public void setHealth(int health) {
         this.health = health;
     }
 
+    /**
+     *Metodi tarkistaa onko laivaan osuttu käymällä läpi sen kaikkia koordinaatteja
+     * @param xcomp Shoot() metodilta saatu
+     * @param ycomp Shoot() metodilta saatu
+     * @return true Osuessaan, muuten false
+     */
     public boolean isHit(int xcomp, int ycomp) {
         for (int i = 0; i < this.size; i++) {
             if (this.orientation == true) {
