@@ -1,5 +1,9 @@
 package laivanupotus.logiikka;
 
+/**
+ *
+ * @author Genie
+ */
 public class Ship {
 
     private final int x;
@@ -53,7 +57,9 @@ public class Ship {
     }
 
     /**
-     *Metodi tarkistaa onko laivaan osuttu käymällä läpi sen kaikkia koordinaatteja
+     * Metodi tarkistaa onko laivaan osuttu käymällä läpi sen kaikkia
+     * koordinaatteja
+     *
      * @param xcomp Shoot() metodilta saatu
      * @param ycomp Shoot() metodilta saatu
      * @return true Osuessaan, muuten false

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ *
+ * @author Genie
+ */
 public class Player {
 
     private final Random r;
@@ -12,10 +16,10 @@ public class Player {
     private List<Ship> fleet;
 
     /**
-     * Konstruktori luo pelialueen ko. pelaajalle sekä
-     * laivasto(fleet)
+     * Konstruktori luo pelialueen ko. pelaajalle sekä laivasto(fleet)
+     *
      * @param name Käyttäjän pelinimi
-     * @param side  Kentän koko
+     * @param side Kentän koko
      */
     public Player(String name, int side) {
         this.r = new Random();
@@ -31,12 +35,11 @@ public class Player {
 
     /**
      * Metodi arpoo tietyn kokoisen laivan sijainnin.
-     * 
+     *
      * @param size Syöte laivan koolle
-     * 
-     * @return Ship Palauttaa Laivan onnistuessaan; palauttaa itsensä jos 
-     *              sijainti ei täytä vaatimuksia; väärillä syötteillä
-     *              palautetaan null.
+     *
+     * @return Ship Palauttaa Laivan onnistuessaan; palauttaa itsensä jos
+     * sijainti ei täytä vaatimuksia; väärillä syötteillä palautetaan null.
      */
     public Ship arvoLaiva(int size) {            //tekoälylle
         if (size >= 0 && size < area.length) {
@@ -73,14 +76,14 @@ public class Player {
     }
 
     /**
-     *Metodi asettaa laivan haluttuun sijaintiin.
-     * 
+     * Metodi asettaa laivan haluttuun sijaintiin.
+     *
      * @param x Käyttäjän antama koordinaatti
      * @param y Käyttäjän antama koordinaatti
      * @param size Käyttäjän antama laivan koko
      * @param orientation Käyttäjän antama laivan suunta
-     * @return  Laiva Palauttaa laivan onnistuessaan, muuten null
-     * 
+     * @return Laiva Palauttaa laivan onnistuessaan, muuten null
+     *
      */
     public Ship asetaLaiva(int x, int y, int size, boolean orientation) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
         if (size >= 0 && size < area.length) {
@@ -108,16 +111,17 @@ public class Player {
     }
 
     /**
-     * Apumetodi laivojen asettamiselle pystysuuntaan.
-     * Metodi päivittää pelialueetta, kun laivoja asetetaan/arvotaan.
-     * Samalla tarkistaa ettei laiva joudu varattuun paikkaan.
-     * @param x 
+     * Apumetodi laivojen asettamiselle pystysuuntaan. Metodi päivittää
+     * pelialueetta, kun laivoja asetetaan/arvotaan. Samalla tarkistaa ettei
+     * laiva joudu varattuun paikkaan.
+     *
+     * @param x
      * @param y
      * @param end
      * @return true Onnistuessaan ja false, jos paikka on varattu
      */
-    private boolean merkkaaXlle(int x, int y, int end) {        
-        if (area[x][y] == '.') {                               
+    private boolean merkkaaXlle(int x, int y, int end) {
+        if (area[x][y] == '.') {
             area[x][y] = 'S';
             if (end == x) {
                 return true;
@@ -128,15 +132,16 @@ public class Player {
     }
 
     /**
-     * Apumetodi laivojen asettamiselle vaakasuuntaan.
-     * Metodi päivittää pelialueetta, kun laivoja asetetaan/arvotaan.
-     * Samalla tarkistaa ettei laiva joudu varattuun paikkaan.
+     * Apumetodi laivojen asettamiselle vaakasuuntaan. Metodi päivittää
+     * pelialueetta, kun laivoja asetetaan/arvotaan. Samalla tarkistaa ettei
+     * laiva joudu varattuun paikkaan.
+     *
      * @param x
      * @param y
      * @param end
      * @return true Onnistuessaan ja false, jos paikka on varattu
      */
-    private boolean merkkaaYlle(int x, int y, int end) {         
+    private boolean merkkaaYlle(int x, int y, int end) {
         if (area[x][y] == '.') {
             area[x][y] = 'S';
             if (end == y) {
@@ -148,28 +153,30 @@ public class Player {
     }
 
     /**
-     * Metodi kutsuu laivaston(fleet) jokaiselle alukselle metodia isHit(),
-     * joka kertoo ampumisen onnistumisen tai epäonnistumisen.
-     * Onnistuessa, aluksen health päivitetään. Laivan tuhoutuessa laivastosta postetaan kyseinen alus.
+     * Metodi kutsuu laivaston(fleet) jokaiselle alukselle metodia isHit(), joka
+     * kertoo ampumisen onnistumisen tai epäonnistumisen. Onnistuessa, aluksen
+     * health päivitetään. Laivan tuhoutuessa laivastosta postetaan kyseinen
+     * alus.
+     *
      * @param p Vastapelaaja
      * @param x Käyttäjän antama x-coord
      * @param y Käyttäjän antama y-coord
-     * @return true Onnistuessa, muuten false
+     * @return ship.health Onnistuessa eli 0 - ship.size, muuten -1
      */
-    public boolean shoot(Player p, int x, int y) {
+    public int shoot(Player p, int x, int y) {
         for (Ship ship : p.getFleet()) {
             if (ship.isHit(x, y)) {
                 ship.setHealth(ship.getHealth() - 1);
                 if (ship.getHealth() == 0) {
                     p.getFleet().remove(ship);
-                    System.out.println("The ship is destroyed!");
+//                    System.out.println("The ship is destroyed!");
                 }
                 p.getArea()[x][y] = 'X';
-                return true;
+                return ship.getHealth();
             }
         }
         p.getArea()[x][y] = 'x';
-        return false;
+        return -1;
     }
 
     public List<Ship> getFleet() {
@@ -177,7 +184,8 @@ public class Player {
     }
 
     /**
-     *Testausta varten tulostaa laivaston kaikki alukset
+     * Testausta varten tulostaa laivaston kaikki alukset
+     *
      * @param p Pelaaja
      */
     public void printFleat(Player p) {

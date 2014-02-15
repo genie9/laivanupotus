@@ -1,97 +1,62 @@
 package laivanupotus.graphics;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
+import laivanupotus.logiikka.Player;
 
+/**
+ *
+ * @author Genie
+ */
 public class Grid extends JPanel {
+    private final Player player;
+    private final char[][] area;
 
-    private int columnCount = 10;
-    private int rowCount = 20;
-    private List<Rectangle> cells;
-    private Point selectedCell;
+    public Grid(Player p) {
+        this.player = p;
+        this.area = p.getArea();
+        setLayout(new GridBagLayout());
 
-    public Grid() {
-        cells = new ArrayList<>(columnCount * rowCount);
-        MouseAdapter mouseHandler;
-        mouseHandler = new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                Point point = e.getPoint();
-
-                int width = getWidth();
-                int height = getHeight();
-
-                int cellWidth = width / columnCount;
-                int cellHeight = height / rowCount;
-
-                int column = e.getX() / cellWidth;
-                int row = e.getY() / cellHeight;
-
-                selectedCell = new Point(column, row);
-                repaint();
-
-            }
-        };
-        addMouseMotionListener(mouseHandler);
-    }
-
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(200, 200);
-    }
-
-    @Override
-    public void invalidate() {
-        cells.clear();
-        selectedCell = null;
-        super.invalidate();
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
-
-        int width = getWidth();
-        int height = getHeight();
-
-        int cellWidth = width / columnCount;
-        int cellHeight = height / rowCount;
-
-        int xOffset = (width - (columnCount * cellWidth)) / 2;
-        int yOffset = (height - (rowCount * cellHeight)) / 2;
-
-        if (cells.isEmpty()) {
-            for (int row = 0; row < rowCount; row++) {
-                for (int col = 0; col < columnCount; col++) {
-                    Rectangle cell = new Rectangle(
-                            xOffset + (col * cellWidth),
-                            yOffset + (row * cellHeight),
-                            cellWidth,
-                            cellHeight);
-                    cells.add(cell);
+        GridBagConstraints gbc = new GridBagConstraints();
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                gbc.gridx = col;
+                gbc.gridy = row;
+                
+                CellPane cellPane = new CellPane(col, row, this.player);
+                Border border = null;
+                if (row < 9) {
+                    if (col < 9) {
+                        border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
+                    } else {
+                        border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
+                    }
+                } else {
+                    if (col < 9) {
+                        border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
+                    } else {
+                        border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
+                    }
                 }
+                cellPane.setBorder(border);
+                add(cellPane, gbc);
             }
         }
+    }
 
-        if (selectedCell != null) {
-
-            int index = selectedCell.x + (selectedCell.y * columnCount);
-            Rectangle cell = cells.get(index);
-            g2d.setColor(Color.BLUE);
-            g2d.fill(cell);
-
+    public void update() {
+        for (int i = 0; i < area.length; i++) {
+            for (int j = 0; j < area.length; j++) {
+                getCell(j * 10 + i).setState(area[i][j]);
+            }
         }
+    }
 
-        g2d.setColor(Color.GRAY);
-        for (Rectangle cell : cells) {
-            g2d.draw(cell);
-        }
-
-        g2d.dispose();
+    public CellPane getCell(int coord) {
+        return (CellPane) getComponent(coord);
     }
 }
-

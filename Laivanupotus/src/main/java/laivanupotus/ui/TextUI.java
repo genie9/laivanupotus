@@ -1,7 +1,10 @@
 package laivanupotus.ui;
 
+/**
+ *
+ * @author Genie
+ */
 import java.util.Scanner;
-//import laivanupotus.logiikka.Ship;
 import laivanupotus.logiikka.Player;
 import laivanupotus.logiikka.Ship;
 
@@ -22,8 +25,6 @@ public class TextUI {
 
         System.out.println("Choose your colour: \n red = 1 \n black = 2");
         int colour = Integer.parseInt(lukija.nextLine());
-//        System.out.println("Choose the number of ships maximum 10 for your fleats maximum : ");
-//        int ships = lukija.nextInt();
 
         if (colour == 1) {
             System.out.print("How shall we call you admiral? ");
@@ -99,7 +100,7 @@ public class TextUI {
                     System.out.println("Out of range. Choose new coordinates.");
                     continue;
                 }
-                if (player1.shoot(player2, x, y)) {
+                if (player1.shoot(player2, x, y)>=0) {
                     /* checking for victory */
                     if (player2.getFleet().isEmpty()) {
                         System.out.println("The victory is your admiral " + player1.getName() + " !!!");
@@ -127,7 +128,7 @@ public class TextUI {
                     System.out.println("Out of range. Choose new coordinates.");
                     continue;
                 }
-                if (player2.shoot(player1, x, y)) {
+                if (player2.shoot(player1, x, y)>=0) {
                     /* checking for victory */
                     if (player1.getFleet().isEmpty()) {
                         System.out.println("The victory is your admiral " + player2.getName() + " !!!");

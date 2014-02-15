@@ -39,3 +39,6 @@
 
 14.2	Sekvenssikaavioita ja luokkakaavion päivitys			1h
 	Testit toimii taas; samalla vähän laivojen arpomisen korjailua	1h
+
+15.2 	Ohjelmointia; swingia nappeja paneleita swingia nappeja....	
+	nyt jo näyttää peliltä						8h

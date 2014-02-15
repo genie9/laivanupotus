@@ -2,22 +2,26 @@ package laivanupotus.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import laivanupotus.graphics.Grid2;
+import laivanupotus.graphics.Grid;
 import laivanupotus.logiikka.Player;
 
+/**
+ *
+ * @author Genie
+ */
 public class ShipRandomizerListener implements ActionListener {
 
-    private Grid2 grid;
+    private Grid grid;
     private final Player p;
     private final int count;
 
-    public ShipRandomizerListener(Player p, int count, Grid2 grid) {
+    public ShipRandomizerListener(Player p, int count, Grid grid) {
         this.grid = grid;
         this.p = p;
         this.count = count;
     }
 
-    private void emtyArea(Player p, Grid2 grid) {
+    private void emptyArea(Player p, Grid grid) {
         this.p.getFleet().removeAll(this.p.getFleet());
         for (int i = 0; i < p.getArea().length; i++) {
             for (int j = 0; j < p.getArea().length; j++) {
@@ -29,7 +33,7 @@ public class ShipRandomizerListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        emtyArea(p, grid);
+        emptyArea(p, grid);
         for (int i = count; i >= 0; i--) {
             int size = i;
             if (i < 3) {

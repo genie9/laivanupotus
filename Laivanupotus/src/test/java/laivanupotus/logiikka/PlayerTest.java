@@ -58,11 +58,12 @@ public class PlayerTest {
     public void arvoLaivaKoollaOnValiaTest2() {
         assertNull(red.arvoLaiva(10));
     }
-    
+
     @Test
     public void asetaLaivaKoollaOnValiaTest1() {
         assertNull(red.asetaLaiva(1, 1, 10, true));
     }
+
     @Test
     public void asetaLaivaKoollaOnValiaTest2() {
         assertNull(red.asetaLaiva(1, 1, -3, true));
@@ -109,16 +110,16 @@ public class PlayerTest {
     }
 
     @Test
-    public void shootOsuessaanPalauttaaTrueTest() {
+    public void shootOsuessaanPalauttaaOkeinTest() {
         black.asetaLaiva(0, 0, 3, true);
-        assertTrue(red.shoot(black, 0, 0));
+        assertEquals(2, red.shoot(black, 0, 0));
     }
 
     @Test
-    public void shootEiOsuessaanPalauttaaFalseTest() {
+    public void shootEiOsuessaanPalauttaaOikeinTest() {
         black.asetaLaiva(0, 0, 1, true);
         red.shoot(black, 0, 1);
-        assertFalse(red.shoot(black, 0, 1));
+        assertEquals(-1, red.shoot(black, 0, 1));
     }
 
     @Test

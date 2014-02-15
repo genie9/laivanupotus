@@ -1,5 +1,6 @@
 package laivanupotus.laivanupotus;
 
+import laivanupotus.ui.GUI;
 import javax.swing.SwingUtilities;
 import laivanupotus.ui.TextUI;
 //import laivanupotus.logiikka.Laiva;
@@ -12,9 +13,9 @@ public class App {
 
         SwingUtilities.invokeLater(w);
         
-        TextUI ui = new TextUI(10);
-        
-        ui.preparation();
+//        TextUI ui = new TextUI(10);
+//        
+//        ui.preparation();
         
 //        System.out.println("Hello World!");
 //
