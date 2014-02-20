@@ -55,33 +55,38 @@ public class GUI implements Runnable {
 
         battleArea.add(g1);
         battleArea.add(g2);
+        JPanel controls = informationArea();
 
+        /*mainLayout container*/
+        container.add(battleArea);
+        container.add(controls);
+    }
+
+    private JPanel informationArea() {
         /*right side - informationArea*/
         JPanel controls = new JPanel();
+        
         controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
-
         controls.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 50));
         controls.add(Box.createHorizontalGlue());
-
+        
         JLabel welcome = new JLabel("Welcome to fight for your glory! \n");
-
+        
+        
+        
         JButton randomize = new JButton("Create yar fleet");
         ShipRandomizerListener randomizer1 = new ShipRandomizerListener(player1, 5, g1);
         randomize.addActionListener(randomizer1);
-
         JButton start = new JButton("Start game!");
         StartListener starter = new StartListener(randomize, start, info);
         ShipRandomizerListener randomizer2 = new ShipRandomizerListener(player2, 5, g2);
         start.addActionListener(randomizer2);
         start.addActionListener(starter);
-
         info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
-
         JLabel turnInfo = new JLabel("Player1 shoots! \n");
         JLabel state = new JLabel();
         info.add(turnInfo);
         info.add(state);
-
         controls.add(welcome);
         controls.add(Box.createRigidArea(new Dimension(0, 100)));
         controls.add(randomize);
@@ -90,10 +95,7 @@ public class GUI implements Runnable {
         controls.add(Box.createRigidArea(new Dimension(0, 20)));
         info.setVisible(false);
         controls.add(info);
-
-        /*mainLayout container*/
-        container.add(battleArea);
-        container.add(controls);
+        return controls;
     }
 
     public static void infoState(int state) {
