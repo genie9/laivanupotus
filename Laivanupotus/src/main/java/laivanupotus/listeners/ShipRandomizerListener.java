@@ -43,7 +43,7 @@ public class ShipRandomizerListener implements ActionListener {
                 }
                 size++;
             }
-            p.arvoLaiva(size);
+            p.randomizeShip(size);
             grid.updateAll();
         }
 

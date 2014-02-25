@@ -25,7 +25,7 @@ public class PlayerTest {
 
     @Test
     public void arvoLaivaPysyyAlueellaTest() {
-        Ship uusi = red.arvoLaiva(3);
+        Ship uusi = red.randomizeShip(3);
         if (uusi.isOrientation()) {
             int xend = uusi.getSize() - 1 + uusi.getX();
             assertTrue((uusi.getX() >= 0) && (xend < 10) && (uusi.getY() >= 0) && (uusi.getY() < 10));
@@ -37,94 +37,94 @@ public class PlayerTest {
 
     @Test
     public void arvoLaivaEiLisaaLaivastoaNegatiivisillaTest() {
-        Ship uusi = red.arvoLaiva(-1);
+        Ship uusi = red.randomizeShip(-1);
         int laivastonKoko = red.getFleet().size();
         assertEquals(0, laivastonKoko);
     }
 
     @Test
     public void arvoLaivaEiLisaaLaivastoaYliAlueenArvoillaTest() {
-        Ship uusi = red.arvoLaiva(11);
+        Ship uusi = red.randomizeShip(11);
         int laivastonKoko = red.getFleet().size();
         assertEquals(0, laivastonKoko);
     }
 
     @Test
     public void arvoLaivaKoollaOnValiaTest1() {
-        assertNull(red.arvoLaiva(-3));
+        assertNull(red.randomizeShip(-3));
     }
 
     @Test
     public void arvoLaivaKoollaOnValiaTest2() {
-        assertNull(red.arvoLaiva(10));
+        assertNull(red.randomizeShip(10));
     }
 
     @Test
     public void asetaLaivaKoollaOnValiaTest1() {
-        assertNull(red.asetaLaiva(1, 1, 10, true));
+        assertNull(red.placeShip(1, 1, 10, true));
     }
 
     @Test
     public void asetaLaivaKoollaOnValiaTest2() {
-        assertNull(red.asetaLaiva(1, 1, -3, true));
+        assertNull(red.placeShip(1, 1, -3, true));
     }
 
     @Test
     public void asetaLaivaPalauttaaNullVaarillaArvoillaTest() {
-        assertEquals(null, red.asetaLaiva(10, 10, 1, false));
+        assertEquals(null, red.placeShip(10, 10, 1, false));
     }
 
     @Test
     public void asetaLaivaPalauttaaNullVaarillaArvoilla2Test() {
-        assertEquals(null, red.asetaLaiva(-1, 1, 1, true));
+        assertEquals(null, red.placeShip(-1, 1, 1, true));
     }
 
     @Test
     public void asetaLaivaPalauttaaLaivanOikeillaArvoillaTest() {
-        String res = red.asetaLaiva(3, 3, 3, true).toString();
+        String res = red.placeShip(3, 3, 3, true).toString();
         assertEquals("x = 3, y = 3, koko = 3, suunta = vertical, health = 3", res);
     }
 
     @Test
     public void asetaLaivaPalauttaaLaivanOikeillaArvoilla2Test() {
-        String res = red.asetaLaiva(3, 3, 3, false).toString();
+        String res = red.placeShip(3, 3, 3, false).toString();
         assertEquals("x = 3, y = 3, koko = 3, suunta = horisontal, health = 3", res);
     }
 
     @Test
     public void asetaLaivaLisaaLaivastoonOikeinTest() {
-        red.asetaLaiva(0, 0, 3, true).toString();
-//        red.asetaLaiva(0, 0, 3, false).toString();
-//        red.asetaLaiva(0, 3, 3, true).toString();
-        red.asetaLaiva(2, 2, 3, false).toString();
+        red.placeShip(0, 0, 3, true).toString();
+//        red.placeShip(0, 0, 3, false).toString();
+//        red.placeShip(0, 3, 3, true).toString();
+        red.placeShip(2, 2, 3, false).toString();
 
         assertSame(2, red.getFleet().size());
     }
 
     @Test
     public void arvoLaivaLisaaLaivastoonOikeinTest() {
-        red.arvoLaiva(4);
-        red.arvoLaiva(3);
-        red.arvoLaiva(-3);
+        red.randomizeShip(4);
+        red.randomizeShip(3);
+        red.randomizeShip(-3);
         assertSame(2, red.getFleet().size());
     }
 
     @Test
     public void shootOsuessaanPalauttaaOkeinTest() {
-        black.asetaLaiva(0, 0, 3, true);
+        black.placeShip(0, 0, 3, true);
         assertEquals(2, red.shoot(black, 0, 0));
     }
 
     @Test
     public void shootEiOsuessaanPalauttaaOikeinTest() {
-        black.asetaLaiva(0, 0, 1, true);
+        black.placeShip(0, 0, 1, true);
         red.shoot(black, 0, 1);
         assertEquals(-1, red.shoot(black, 0, 1));
     }
 
     @Test
     public void shootTappaessaanPoistaaLaivanLaivastostaTest() {
-        black.asetaLaiva(0, 0, 1, true);
+        black.placeShip(0, 0, 1, true);
         red.shoot(black, 0, 0);
         assertEquals(0, black.getFleet().size());
     }

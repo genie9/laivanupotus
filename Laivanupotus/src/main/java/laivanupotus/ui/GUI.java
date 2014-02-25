@@ -47,13 +47,13 @@ public class GUI implements Runnable {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        luoKomponentit(frame.getContentPane());
+        createComponents(frame.getContentPane());
 
         frame.pack();
         frame.setVisible(true);
     }
 
-    private void luoKomponentit(Container container) {
+    private void createComponents(Container container) {
         /*mainLayout*/
         BoxLayout layout = new BoxLayout(container, BoxLayout.LINE_AXIS);
         container.setLayout(layout);
@@ -110,10 +110,10 @@ public class GUI implements Runnable {
 
     public static void infoState(int state) {
         JLabel hit = (JLabel) info.getComponent(1);
-        if(state == -3){
+        if (state == -3) {
             hit.setText("WIN!!");
             canShoot = !canShoot;
-        }else if (state == -2) {
+        } else if (state == -2) {
             hit.setText("ERROR! Shoot again");
         } else if (state == -1) {
             hit.setText("miss");
@@ -124,15 +124,15 @@ public class GUI implements Runnable {
         }
     }
 
-    public static void setWhosTurn() {      
+    public static void setWhosTurn() {
         whosTurn = !whosTurn;
         JLabel turnInfo = (JLabel) info.getComponent(0);
         if (whosTurn) {
             turnInfo.setText("Player1 shoots!");
-            System.out.println("Player2: " + player2.shots + " shots, fleetSize "+ player2.getFleet().size() + ". Player1 shoots!");
+            System.out.println("Player2: " + player2.shots + " shots, fleetSize " + player2.getFleet().size() + ". Player1 shoots!");
         } else {
             turnInfo.setText("Player2 shoots!");
-            System.out.println("Player1: " + player1.shots + " shots, fleetSize "+ player1.getFleet().size() + ". Player2 shoots!");
+            System.out.println("Player1: " + player1.shots + " shots, fleetSize " + player1.getFleet().size() + ". Player2 shoots!");
             cylonShoots();
         }
     }
@@ -143,15 +143,14 @@ public class GUI implements Runnable {
             int x = r.nextInt(10);
             int y = r.nextInt(10);
             result = player2.shoot(player1, x, y);
-            if(result == 0){
-                if(player1.getFleet().isEmpty()){
-                infoState(-3);
-            }
+            if (result == 0) {
+                if (player1.getFleet().isEmpty()) {
+                    infoState(-3);
+                }
             }
             infoState(result);
             g1.update(x, y, player1);
-//            Thread.sleep(1000);
-            
+//            Thread.sleep(1000);   
         }
         setWhosTurn();
     }

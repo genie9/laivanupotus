@@ -75,8 +75,8 @@ public class TextUI {
 //                    pos = false;at laivanupotus.ui.TextUI.play(TextUI.java:84)
 //                }
 //            }
-//            p.asetaLaiva(x, y, size, pos);
-            p.arvoLaiva(size);
+//            p.placeShip(x, y, size, pos);
+            p.randomizeShip(size);
 //            printSituation(p);
 //            System.out.println("");
         }

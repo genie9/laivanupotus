@@ -48,11 +48,15 @@
 21.2	yritin toteuttaa pelaajalle placeship metodia guissa, mutta
 	törmäsin seinään toteutuksessa, eli miten se ylipäätään toimisi
 	graafisessa ui:ssa. Muutaman ajatuksen testauksen jälkeen jouduin 
-	palaamaan siihen mistä aloitin					8h
+	palaamaan siihen mistä aloitin eli 15.2 versioon :(		8h
 
-24.2	päätin tehdä jo toimivaan yksin pelin versioon toiminnallisuudet,
+24.2	päätin tehdä jo toimivaan "yksin peli" versioon toiminnallisuudet,
 	jotka ovat oleellisia pelin pelattavuuden kannalta eli vastapelaajan
 	(AI:n) laivat näkymättömäksi ja AI:n ampuminen. 		6h
  
+25.2	win-tilanne, toisen pelaajan kenttään ampuminen			3h
+	bugien korjailua						2h
+
+
 
 

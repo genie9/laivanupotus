@@ -12,8 +12,8 @@ public class Player {
 
     private final Random r;
     private final String name;
-    private char[][] area;
-    private List<Ship> fleet;
+    private final char[][] area;
+    private final List<Ship> fleet;
     public int shots;
 
     /**
@@ -36,45 +36,29 @@ public class Player {
     }
 
     /**
-     * Metodi arpoo tietyn kokoisen laivan sijainnin.
+     * Metodi arpoo tietyn kokoisen laivan sijainnin. Käyttää avukseen metodia
+ placeShip().
      *
      * @param size Syöte laivan koolle
      *
-     * @return Ship Palauttaa Laivan onnistuessaan; palauttaa itsensä jos
-     * sijainti ei täytä vaatimuksia; väärillä syötteillä palautetaan null.
+     * @return Ship Palauttaa Laivan onnistuessaan; palauttaa itsensä, jos
+     * sijainti ei täytä vaatimuksia.
      */
-    public Ship arvoLaiva(int size) {            //tekoälylle
-        if (size >= 0 && size < area.length) {
-            boolean orientation = r.nextBoolean();
-            if (orientation) {                                           //jos arvottu pystyyn
-                int x = r.nextInt(area.length - size + 1);
-                int y = r.nextInt(area.length);
-                int xend = x + size - 1;
-
-                if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
-                    if (merkkaaXlle(x, y, xend)) {
-                        Ship ship = new Ship(x, y, size, orientation);
-                        fleet.add(ship);
-                        return ship;
-                    }
-                    return arvoLaiva(size);
-                }
-            } else {                                                //jos arvottu vaakaan
-                int x = r.nextInt(area.length);
-                int y = r.nextInt(area.length - size + 1);
-                int yend = y + size - 1;
-
-                if (x < area.length && x >= 0 && y >= 0 && yend < area.length) {
-                    if (merkkaaYlle(x, y, yend)) {
-                        Ship laiva = new Ship(x, y, size, orientation);
-                        fleet.add(laiva);
-                        return laiva;
-                    }
-                    return arvoLaiva(size);
-                }
+    public Ship randomizeShip(int size) {            //tekoälylle
+        Ship s;
+        boolean orientation = r.nextBoolean();
+        if (orientation) {  //jos arvottu pystyyn
+            s = placeShip(r.nextInt(area.length - size + 1), r.nextInt(area.length), size, orientation);
+            if (s == null) {
+                randomizeShip(size);
+            }
+        } else {
+            s = placeShip(r.nextInt(area.length), r.nextInt(area.length - size + 1), size, orientation);
+            if (s == null) {
+                randomizeShip(size);
             }
         }
-        return null;
+        return s;
     }
 
     /**
@@ -87,24 +71,24 @@ public class Player {
      * @return Laiva Palauttaa laivan onnistuessaan, muuten null
      *
      */
-    public Ship asetaLaiva(int x, int y, int size, boolean orientation) {    //ihmispelaajalle, aika samanlainen kuin arpoLaiva
-        if (size >= 0 && size < area.length) {
-            Ship laiva = new Ship(x, y, size, orientation);
-
+    public Ship placeShip(int x, int y, int size, boolean orientation) {    //ihmispelaajalle
+        if (size >= 1 && size < area.length) {
             if (orientation) {
                 int xend = x + size - 1;
                 if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
-                    if (merkkaaXlle(x, y, xend)) {
-                        fleet.add(laiva);
-                        return laiva;
+                    if (markOnX(x, y, xend)) {
+                        Ship ship = new Ship(x, y, size, orientation);
+                        fleet.add(ship);
+                        return ship;
                     }
                 }
             } else {
                 int yend = y + size - 1;
                 if (x < area.length && x >= 0 && y >= 0 && yend < area.length) {
-                    if (merkkaaYlle(x, y, yend)) {
-                        fleet.add(laiva);
-                        return laiva;
+                    if (markOnY(x, y, yend)) {
+                        Ship ship = new Ship(x, y, size, orientation);
+                        fleet.add(ship);
+                        return ship;
                     }
                 }
             }
@@ -114,23 +98,24 @@ public class Player {
 
     /**
      * Apumetodi laivojen asettamiselle pystysuuntaan. Metodi päivittää
-     * pelialueetta, kun laivoja asetetaan/arvotaan. Samalla tarkistaa ettei
-     * laiva joudu varattuun paikkaan.
+     * pelialueetta, kun laivoja asetetaan. Samalla tarkistaa ettei laiva joudu
+     * varattuun paikkaan.
      *
      * @param x
      * @param y
      * @param end
      * @return true Onnistuessaan ja false, jos paikka on varattu
      */
-    private boolean merkkaaXlle(int x, int y, int end) {
-        if (area[x][y] == '.') {
-            area[x][y] = 'S';
-            if (end == x) {
-                return true;
+    private boolean markOnX(int x, int y, int end) {
+        for (int i = x; i <= end; i++) {
+            if (area[i][y] != '.') {
+                return false;
             }
-            return merkkaaXlle(x + 1, y, end);
         }
-        return false;
+        for (int j = x; j <= end; j++) {
+            area[j][y] = 'S';
+        }
+        return true;
     }
 
     /**
@@ -143,15 +128,16 @@ public class Player {
      * @param end
      * @return true Onnistuessaan ja false, jos paikka on varattu
      */
-    private boolean merkkaaYlle(int x, int y, int end) {
-        if (area[x][y] == '.') {
-            area[x][y] = 'S';
-            if (end == y) {
-                return true;
+    private boolean markOnY(int x, int y, int end) {
+        for (int i = y; i <= end; i++) {
+            if (area[x][i] != '.') {
+                return false;
             }
-            return merkkaaYlle(x, y + 1, end);
         }
-        return false;
+        for (int j = y; j <= end; j++) {
+            area[x][j] = 'S';
+        }
+        return true;
     }
 
     /**
@@ -166,14 +152,13 @@ public class Player {
      * @return ship.health Onnistuessa eli 0 - ship.size, muuten -1
      */
     public int shoot(Player p, int x, int y) {
-        
         if (p.getArea()[x][y] == '.') {
             p.getArea()[x][y] = 'x';
-            this.shots ++;
+            this.shots++;
             return -1;
         }
         if (p.getArea()[x][y] == 'S') {
-            this.shots ++;
+            this.shots++;
             for (Ship ship : p.getFleet()) {
                 if (ship.isHit(x, y)) {
                     ship.setHealth(ship.getHealth() - 1);
