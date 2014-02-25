@@ -1,0 +1,239 @@
+package laivanupotus.ui;
+
+import java.awt.Container;
+import java.awt.Dimension;
+import javax.swing.*;
+import laivanupotus.graphics.CellPane;
+import laivanupotus.graphics.Grid;
+import laivanupotus.graphics.CreateGameScreen;
+import laivanupotus.listeners.*;
+import laivanupotus.listeners.StartShootingListener;
+import laivanupotus.logiikka.Player;
+
+/**
+ *
+ * @author Genie
+ */
+public class GUI implements Runnable {
+
+    private static JFrame frame;
+    private static Player player1;
+    private static Player player2;
+    public static Grid g1;
+    public static Grid g2;
+    private static CellPane cell;
+    public CreateGameScreen createGame;
+
+    private static boolean rules;       //true-> USSR, false-> US
+    public static boolean players;      //true-> pvp, false-> p vs bot
+    public static boolean changeScreen;
+    private static boolean whosTurn;    //true-> p1, false-> p2    
+    public static boolean placeShips;
+    public static boolean shooting;
+
+    public GUI() {
+        player1 = new Player();
+        player2 = new Player();
+        g1 = new Grid(player1);
+        g2 = new Grid(player2);
+        
+        rules = false;    
+        if(!rules){
+            int count = 5;
+        }
+        players = false;
+        changeScreen = false;        
+        whosTurn = true;
+        placeShips =false;
+        shooting = false;
+    }
+
+    @Override
+    public void run() {
+        frame = new JFrame("BATTLESHIPS");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        mainComponents(frame.getContentPane());
+
+        frame.pack();
+        frame.setVisible(true);
+//        frame.setResizable(false);
+    }
+
+    public static void update(){
+       frame.setSize(new Dimension(800, 800));
+       mainComponents(frame.getContentPane());
+       frame.validate();
+    }
+    
+    private static void mainComponents(Container container) {
+        if(changeScreen){
+            container.removeAll();
+            container.add(mainLayout());
+            container.revalidate();
+        }else{
+            container.add(new CreateGameScreen(container));
+        }
+    }
+
+    private static JPanel mainLayout() {
+        JPanel mainLayout = new JPanel();
+        BoxLayout layout = new BoxLayout(mainLayout, BoxLayout.LINE_AXIS);
+        mainLayout.setLayout(layout);
+
+        /*left side - battleArea*/
+        JPanel battleArea = new JPanel();
+        battleArea.setLayout(new BoxLayout(battleArea, BoxLayout.PAGE_AXIS));
+
+        battleArea.add(g1);
+        battleArea.add(g2);
+
+        /*mainLayout container*/
+        mainLayout.add(battleArea);
+        mainLayout.add(informationArea());
+        
+        return mainLayout;
+    }
+
+    private static JPanel informationArea() {
+        /*right side - informationArea*/
+        JPanel controls = new JPanel();
+
+        controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
+        controls.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 50));
+        controls.add(Box.createHorizontalGlue());
+
+        JLabel welcome = new JLabel("Welcome to fight for your glory! \n");
+
+        JButton randomize = new JButton("Create yar fleet");
+        randomize.addActionListener(new ShipRandomizerListener(player1, 5, g1));
+        /*KESKEN!*/
+        JButton start = new JButton("Start game!");
+
+        start.addActionListener(new ShipRandomizerListener(player2, 5, g2));
+        start.addActionListener(new StartShootingListener(info(), randomize, start));
+
+        controls.add(welcome);
+        controls.add(Box.createRigidArea(new Dimension(0, 100)));
+//        controls.add(createFleet());
+//        controls.add(Box.createRigidArea(new Dimension(0, 20)));
+        controls.add(randomize);
+        controls.add(Box.createRigidArea(new Dimension(0, 20)));
+        controls.add(start);
+        controls.add(Box.createRigidArea(new Dimension(0, 20)));
+        controls.add(info());
+        
+        return controls;
+    }
+
+    private static JPanel info() {
+        JPanel info = new JPanel();
+        info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
+
+        JLabel turnInfo = new JLabel("Player1 shoots! \n");
+        JLabel state = new JLabel();
+
+        info.add(turnInfo);
+        info.add(state);
+        
+        info.setVisible(false);
+        return info;
+    }
+    
+    /*KESKEN*/
+    private static JPanel createFleet() {
+        
+        JPanel createFleet = new JPanel();
+        createFleet.setLayout(new BoxLayout(createFleet, BoxLayout.PAGE_AXIS));
+
+        JLabel placeShips = new JLabel("Player1, place your ships!");
+        JLabel intructions = new JLabel("Left click on preferred 				position and right click to turn direction");
+        
+//        cell.
+//        
+//        for (int i = count; i >= 0; i--) {
+//            int size = i;
+//            if (i < 3) {
+//                if (i == 0) {
+//                    size = 1;
+//                }
+//                size++;
+//            }
+//            if(whosTurn)
+//            p.arvoLaiva(size);
+//            grid.update();
+//        
+//        }
+//        JLabel count = new JLabel("This ship is " + ship.length + "units long. You have " + count + " ships left.");
+        
+        JButton ready = new JButton("Ready");
+
+        ready.addActionListener(new NextPlayerListener(placeShips));
+        ready.addActionListener(new HideShipsListener());
+
+        createFleet.add(placeShips);
+        createFleet.add(Box.createRigidArea(new Dimension(0, 20)));
+        createFleet.add(intructions);
+        createFleet.add(Box.createRigidArea(new Dimension(0, 20)));
+//        createFleet.add(count);
+//        createFleet.add(Box.createRigidArea(new Dimension(0, 20)));
+        createFleet.add(ready);
+        createFleet.add(Box.createRigidArea(new Dimension(0, 20)));
+        
+        return createFleet;
+    }
+
+
+    public static void infoState(int state) {
+        if (state == -1) {
+            JLabel hit = (JLabel) info().getComponent(1);
+            hit.setText("miss");
+        } else if (state == 0) {
+            JLabel destroyed = (JLabel) info().getComponent(1);
+            destroyed.setText("destroyed");
+        } else {
+            JLabel hit = (JLabel) info().getComponent(1);
+            hit.setText("hit");
+        }
+    }    
+
+    public static void setWhosTurn(boolean muutos) {
+        GUI.whosTurn = muutos;
+        if (muutos) {
+            JLabel turnInfo = (JLabel) info().getComponent(0);
+            turnInfo.setText("Player1 shoots!");
+        } else {
+            JLabel turnInfo = (JLabel) info().getComponent(0);
+            turnInfo.setText("Player2 shoots!");
+        }
+    }
+
+    public static boolean isWhosTurn() {
+        return whosTurn;
+    }
+
+    public static Player getPlayer1() {
+        return player1;
+    }
+
+    public static Player getPlayer2() {
+        return player2;
+    }
+
+    private void whoVsWho() {
+        if (players) {
+
+        }
+    }
+    
+    public static void infoVisible(){
+        info().setVisible(true);
+        mainLayout().revalidate();
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+}
+

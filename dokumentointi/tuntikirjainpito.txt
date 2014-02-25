@@ -42,3 +42,17 @@
 
 15.2 	Ohjelmointia; swingia nappeja paneleita swingia nappeja....	
 	nyt jo näyttää peliltä						8h
+
+20.2	lähdin toteuttaa pvp ja p vs bot valinnaisuutta peliin		8h
+
+21.2	yritin toteuttaa pelaajalle placeship metodia guissa, mutta
+	törmäsin seinään toteutuksessa, eli miten se ylipäätään toimisi
+	graafisessa ui:ssa. Muutaman ajatuksen testauksen jälkeen jouduin 
+	palaamaan siihen mistä aloitin					8h
+
+24.2	päätin tehdä jo toimivaan yksin pelin versioon toiminnallisuudet,
+	jotka ovat oleellisia pelin pelattavuuden kannalta eli vastapelaajan
+	(AI:n) laivat näkymättömäksi ja AI:n ampuminen. 		6h
+ 
+
+

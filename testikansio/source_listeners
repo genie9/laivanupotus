@@ -1,0 +1,114 @@
+package laivanupotus.listeners;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+import laivanupotus.ui.GUI;
+
+/**
+ *
+ * @author evly
+ */
+public class NextPlayerListener implements ActionListener {
+
+    private JLabel labelToChange;
+
+    public NextPlayerListener(JLabel placeShips) {
+        labelToChange = placeShips;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        GUI.setWhosTurn(false);
+
+        if (GUI.players) {
+            labelToChange.setText("Player2, place your ships!");
+        } else {
+            labelToChange.setText("Player2 is ready. Press START");
+        }
+    }
+
+}
+
+
+---------------------------------------------------------------------------
+package laivanupotus.listeners;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ *
+ * @author evly
+ */
+public class HideShipsListener implements ActionListener {
+
+    public HideShipsListener() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}
+------------------------------------------------------------------------
+package laivanupotus.listeners;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import laivanupotus.ui.GUI;
+
+/**
+ *
+ * @author evly
+ */
+public class CreateGameListener implements ActionListener {
+
+    public CreateGameListener() {
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        GUI.changeScreen = true;
+        GUI.update();
+    }
+    
+}
+-------------------------------------------------------------------------
+@Override
+            public void mouseClicked(MouseEvent e) {
+//                if (GUI.placeShips) {
+////                    placeShips();
+//                } else if (GUI.shooting) {
+                    shooting();
+//                }
+            }
+        });
+    }
+
+//    private void placeShips() {
+//        int size = GUI.shipSize();
+//        boolean pos = 
+//        GUI.getPlayer1().asetaLaiva(x, y, size, true)
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+
+    private void shooting() {
+        int result;
+        if (GUI.isWhosTurn()) {
+            result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
+            if (result == -1) {
+                GUI.setWhosTurn(false);
+            }
+        } else {
+            result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
+            if (result == -1) {
+                GUI.setWhosTurn(true);
+            }
+        }
+        GUI.infoState(result);
+        updateColour(state);
+        GUI.g1.update();
+        GUI.g2.update();
+   }

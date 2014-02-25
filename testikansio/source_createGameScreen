@@ -1,0 +1,92 @@
+package laivanupotus.graphics;
+
+import laivanupotus.listeners.CreateGameListener;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import laivanupotus.ui.GUI;
+
+/**
+ * Game opens with this screen. Class has functions 
+ * to create game with specific parameters.
+ * 
+ * @author genie
+ */
+public class CreateGameScreen extends JPanel implements ActionListener{
+    
+    public CreateGameScreen(Container container) {
+        
+        BoxLayout layout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+        this.setLayout(layout);
+        
+        this.setSize(new Dimension(400, 250));
+        
+        this.add(specs());
+        this.add(create());
+    }
+
+    private JPanel create() {
+        JPanel create = new JPanel();
+        create.setLayout(new GridLayout(1, 1, 40, 40));
+        
+        JButton createB = new JButton("Create Game!");
+        createB.addActionListener(new CreateGameListener());
+        create.add(createB);
+        
+        create.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
+        
+        return create;
+    }
+    
+    private JPanel specs(){
+        JPanel specs = new JPanel();
+//        Border outer = new EtchedBorder(3, Color.BLUE, Color.yellow);
+        specs.setLayout(new GridLayout(2, 2, 30, 30));
+        
+        /*Choose rules*/
+        JRadioButton USSRRules = new JRadioButton("USSR Rules");
+        JRadioButton USRules = new JRadioButton("USA Rules");
+       
+        ButtonGroup rules = new ButtonGroup();
+        rules.add(USSRRules);
+        rules.add(USRules);
+        
+        specs.add(USSRRules);
+        specs.add(USRules);
+        
+        /*Choose players*/
+        JRadioButton pvp = new JRadioButton("PVP");
+        JRadioButton pvsbot = new JRadioButton("P vs Bot");
+        
+        pvp.addActionListener(this);
+//        pvsbot.addActionListener(this);
+        
+        ButtonGroup players = new ButtonGroup();
+        rules.add(pvp);
+        rules.add(pvsbot);
+        
+        specs.add(pvp);
+        specs.add(pvsbot);
+       
+//        specs.setBorder(outer);
+        specs.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
+        
+        return specs;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        GUI.players=true;
+    }
+   
+    
+}
+
