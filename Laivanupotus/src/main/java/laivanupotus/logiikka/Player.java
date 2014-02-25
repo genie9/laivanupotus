@@ -164,19 +164,25 @@ public class Player {
      * @return ship.health Onnistuessa eli 0 - ship.size, muuten -1
      */
     public int shoot(Player p, int x, int y) {
-        for (Ship ship : p.getFleet()) {
-            if (ship.isHit(x, y)) {
-                ship.setHealth(ship.getHealth() - 1);
-                if (ship.getHealth() == 0) {
-                    p.getFleet().remove(ship);
-//                    System.out.println("The ship is destroyed!");
+        if (p.getArea()[x][y] == '.') {
+            p.getArea()[x][y] = 'x';
+            return -1;
+        }
+        if (p.getArea()[x][y] == 'S') {
+            for (Ship ship : p.getFleet()) {
+                if (ship.isHit(x, y)) {
+                    ship.setHealth(ship.getHealth() - 1);
+                    if (ship.getHealth() == 0) {
+                        p.getFleet().remove(ship);
+                        p.getArea()[x][y] = 'D';
+                        return ship.getHealth();
+                    }
+                    p.getArea()[x][y] = 'X';
+                    return ship.getHealth();
                 }
-                p.getArea()[x][y] = 'X';
-                return ship.getHealth();
             }
         }
-        p.getArea()[x][y] = 'x';
-        return -1;
+        return -2;
     }
 
     public List<Ship> getFleet() {

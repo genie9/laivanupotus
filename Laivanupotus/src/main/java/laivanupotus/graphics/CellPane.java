@@ -19,6 +19,7 @@ public class CellPane extends JPanel {
     private int x, y;
     private Player p;
     private char state;
+    private boolean hidden;
 
     public CellPane(int x, int y, Player p) {
         this();
@@ -27,6 +28,7 @@ public class CellPane extends JPanel {
         this.p = p;
         this.state = p.getArea()[x][y];
         updateColour(state);
+        this.hidden = false;
     }
 //char state
 
@@ -45,35 +47,60 @@ public class CellPane extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                setBackground(Color.white);
-
-                int result = -1;
-                if (GUI.isWhosTurn()) {
-                    result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
-                    if (result == -1) {
-                        GUI.setWhosTurn(false);
-                    }
-                } else {
-                    result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
-                    if (result == -1) {
-                        GUI.setWhosTurn(true);
-                    }
-                }
-                GUI.infoState(result);
-                updateColour(state);
-                GUI.g1.update();
-                GUI.g2.update();
+                shoot();
             }
         });
+    }
+
+    private void shoot() {
+////        int result = GUI.getPlayer(true).shoot(GUI.getPlayer(false), x, y);
+////        if (this.p == GUI.getPlayer(true)) {
+////            return;
+////        }
+////        if (result == -1) {
+////            GUI.setWhosTurn();
+//        Player pl = GUI.getPlayer(GUI.isWhosTurn());
+//        if (this.p == pl) {
+//            return;
+//        }
+        int result; //= pl.shoot(GUI.getPlayer(!GUI.whosTurn), x, y);
+//        if (result == -1) {
+//            GUI.setWhosTurn();
+//            GUI.cylonShoots();
+//        }
+                if (GUI.whosTurn) {
+                    result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
+                    if (result == -1) {
+                        GUI.setWhosTurn();
+                    }
+                } else {
+                    
+                    
+                    result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
+                    if (result == -1) {
+                        GUI.setWhosTurn();
+                    }
+
+                }
+        
+        GUI.infoState(result);
+        updateColour(state);
+        GUI.g1.updateAll();
+        GUI.g2.updateAll();
+
     }
 
     private void updateColour(char state) {
         if (state == 'x') {
             background = Color.PINK;
         } else if (state == 'S') {
-            background = Color.BLACK;
+            if (!hidden) {
+                background = Color.BLACK;
+            }
         } else if (state == 'X') {
             background = Color.ORANGE;
+        } else if (state == 'D') {
+            background = Color.RED;
         } else {
             background = Color.getHSBColor(145.0f / 255.0f, 165.0f / 255.0f, 125.0f / 255.0f);
         }
@@ -116,4 +143,7 @@ public class CellPane extends JPanel {
 //        }
 //        return false;
 //    }
+    public void setHidden() {
+        this.hidden = true;
+    }
 }

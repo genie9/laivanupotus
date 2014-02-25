@@ -26,8 +26,9 @@ public class ShipRandomizerListener implements ActionListener {
         for (int i = 0; i < p.getArea().length; i++) {
             for (int j = 0; j < p.getArea().length; j++) {
                 p.getArea()[i][j] = '.';
+                grid.update(i,j, p);
             }
-            grid.update();
+//            grid.update();
         }
     }
 
@@ -43,7 +44,7 @@ public class ShipRandomizerListener implements ActionListener {
                 size++;
             }
             p.arvoLaiva(size);
-            grid.update();
+            grid.updateAll();
         }
 
     }

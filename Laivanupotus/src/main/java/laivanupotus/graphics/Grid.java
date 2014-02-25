@@ -28,7 +28,7 @@ public class Grid extends JPanel {
                 gbc.gridy = row;
                 
                 CellPane cellPane = new CellPane(col, row, this.player);
-                Border border = null;
+                Border border;
                 if (row < 9) {
                     if (col < 9) {
                         border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
@@ -48,7 +48,13 @@ public class Grid extends JPanel {
         }
     }
 
-    public void update() {
+    public void update(int x, int y, Player p) {
+        if(getPlayer()== p)
+                getCell(y * 10 + x).setState(area[x][y]);
+            }
+        
+    
+    public void updateAll() {
         for (int i = 0; i < area.length; i++) {
             for (int j = 0; j < area.length; j++) {
                 getCell(j * 10 + i).setState(area[i][j]);
@@ -59,4 +65,18 @@ public class Grid extends JPanel {
     public CellPane getCell(int coord) {
         return (CellPane) getComponent(coord);
     }
+    
+    public void hideShips(){
+        for (int i = 0; i < area.length; i++) {
+            for (int j = 0; j < area.length; j++) {
+                getCell(j * 10 + i).setHidden();
+            }
+        }
+        
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+    
 }
