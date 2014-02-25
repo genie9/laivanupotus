@@ -1,10 +1,7 @@
 package laivanupotus.ui;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.util.Random;
 import javax.swing.*;
 import laivanupotus.graphics.Grid;
@@ -128,9 +125,17 @@ public class GUI implements Runnable {
         whosTurn = !whosTurn;
         JLabel turnInfo = (JLabel) info.getComponent(0);
         if (whosTurn) {
+            if(!canShoot){
+                turnInfo.setText("Player1");
+                return;
+            }
             turnInfo.setText("Player1 shoots!");
             System.out.println("Player2: " + player2.shots + " shots, fleetSize " + player2.getFleet().size() + ". Player1 shoots!");
         } else {
+            if(!canShoot){
+                turnInfo.setText("Player2");
+                return;
+            }
             turnInfo.setText("Player2 shoots!");
             System.out.println("Player1: " + player1.shots + " shots, fleetSize " + player1.getFleet().size() + ". Player2 shoots!");
             cylonShoots();

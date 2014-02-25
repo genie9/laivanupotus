@@ -16,7 +16,7 @@ public class ShipTest {
      @Test
      public void konstruktoriAsettaaArvotOikeinTest() {
          laiva = new Ship(4, 5, 4, true);
-         assertEquals("x = 4, y = 5, koko = 4, suunta = vertical, health = 4", laiva.toString());
+         assertEquals("ship(4,5)", laiva.toString());
      }
      
      @Test

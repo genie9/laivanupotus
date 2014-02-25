@@ -26,7 +26,7 @@ public class PlayerTest {
     @Test
     public void arvoLaivaPysyyAlueellaTest() {
         Ship uusi = red.randomizeShip(3);
-        if (uusi.isOrientation()) {
+        if (uusi.isPosition()) {
             int xend = uusi.getSize() - 1 + uusi.getX();
             assertTrue((uusi.getX() >= 0) && (xend < 10) && (uusi.getY() >= 0) && (uusi.getY() < 10));
         } else {
@@ -51,14 +51,16 @@ public class PlayerTest {
 
     @Test
     public void arvoLaivaKoollaOnValiaTest1() {
-        assertNull(red.randomizeShip(-3));
+        assertEquals(null, red.randomizeShip(-3));
     }
 
     @Test
     public void arvoLaivaKoollaOnValiaTest2() {
-        assertNull(red.randomizeShip(10));
+        assertEquals(null, red.randomizeShip(10));
     }
+    
 
+    
     @Test
     public void asetaLaivaKoollaOnValiaTest1() {
         assertNull(red.placeShip(1, 1, 10, true));
@@ -66,7 +68,12 @@ public class PlayerTest {
 
     @Test
     public void asetaLaivaKoollaOnValiaTest2() {
-        assertNull(red.placeShip(1, 1, -3, true));
+        assertEquals(null, red.placeShip(1, 1, -3, true));
+    }
+    @Test
+    public void asetaLaivaKoollaOnValiaTest3() {
+        String res = red.placeShip(0, 0, 4, true).toString();
+        assertEquals("ship(0,0)", res);
     }
 
     @Test
@@ -76,29 +83,29 @@ public class PlayerTest {
 
     @Test
     public void asetaLaivaPalauttaaNullVaarillaArvoilla2Test() {
-        assertEquals(null, red.placeShip(-1, 1, 1, true));
+        assertEquals(null, red.placeShip(-1, -1, 1, true));
     }
 
     @Test
     public void asetaLaivaPalauttaaLaivanOikeillaArvoillaTest() {
         String res = red.placeShip(3, 3, 3, true).toString();
-        assertEquals("x = 3, y = 3, koko = 3, suunta = vertical, health = 3", res);
+        assertEquals("ship(3,3)", res);
     }
 
     @Test
     public void asetaLaivaPalauttaaLaivanOikeillaArvoilla2Test() {
         String res = red.placeShip(3, 3, 3, false).toString();
-        assertEquals("x = 3, y = 3, koko = 3, suunta = horisontal, health = 3", res);
+        assertEquals("ship(3,3)", res);
     }
 
     @Test
     public void asetaLaivaLisaaLaivastoonOikeinTest() {
-        red.placeShip(0, 0, 3, true).toString();
-//        red.placeShip(0, 0, 3, false).toString();
-//        red.placeShip(0, 3, 3, true).toString();
-        red.placeShip(2, 2, 3, false).toString();
+        red.placeShip(0, 0, 3, true);
+        red.placeShip(0, 0, 3, false);
+        red.placeShip(0, 3, 3, true);
+        red.placeShip(2, 2, 3, false);
 
-        assertSame(2, red.getFleet().size());
+        assertEquals(2, red.getFleet().size());
     }
 
     @Test
@@ -118,8 +125,8 @@ public class PlayerTest {
     @Test
     public void shootEiOsuessaanPalauttaaOikeinTest() {
         black.placeShip(0, 0, 1, true);
-        red.shoot(black, 0, 1);
         assertEquals(-1, red.shoot(black, 0, 1));
+        assertEquals(1, red.shots);
     }
 
     @Test
@@ -127,5 +134,15 @@ public class PlayerTest {
         black.placeShip(0, 0, 1, true);
         red.shoot(black, 0, 0);
         assertEquals(0, black.getFleet().size());
+        assertEquals(1, red.shots);
     }
+    
+    @Test
+    public void shootAmpuessaanSamaanPaikkaanPalauttaaOikeinTest() {
+        black.placeShip(0, 0, 1, true);
+        red.shoot(black, 0, 0);
+        assertEquals(-2, red.shoot(black, 0, 0));
+        assertEquals(1, red.shots);
+    }
+
 }

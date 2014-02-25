@@ -1,17 +1,15 @@
-ÔªøAihe: Laivanupotus
-Toteutetaan vuoropohjainen graafinen peli Laivanupotus, jossa pelaaja pelaa teko√§ly√§ vastaan.( Ajan salliessa pyrit√§√§n toteuttamaan kaksinpeli verkon v√§lityksell√§, ja aika ei n√§yt√§ sallivan) 
+Aihe: Laivanupotus
+Toteutetaan vuoropohjainen graafinen peli Laivanupotus, jossa pelaaja pelaa teko‰ly‰ tai toista pelaajaa vastaan .
 
-K√§ytt√§j√§t: Pelaaja/pelaajat
+K‰ytt‰j‰t: Pelaaja/pelaajat
 
-Kaikkien k√§ytt√§jien toiminnot:
--pelaajanimen valitseminen, ellei ole olemassa luo uuden
--pelityypin vavitseminen: (pvp tai) p vs bot, laivojen m√§√§r√§n mukaan (esim.5-10)
--laivojen j√§rjest√§minen pelialueelle
--ampumakoordinaattien valitseminen
--high scoren 
+Kaikkien k‰ytt‰jien toiminnot:
 
-Teko√§lyn toiminnot:
-- hahmon arpominen
-- laivojen j√§rjestyksen arpominen pelialueelle
+-pelityypin vavitseminen: (pvp tai) p vs bot, (laivojen m‰‰r‰n mukaan (esim.5-10))
+-laivojen j‰rjest‰minen/arpominen pelialueelle
+-ampumakoordinaattien valitseminen hiirt‰ k‰ytt‰en
+
+Teko‰lyn toiminnot:
+- laivojen j‰rjestyksen arpominen pelialueelle
 - ampumakoordinaattien valitseminen
 

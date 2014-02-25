@@ -64,23 +64,21 @@ public class CellPane extends JPanel {
             result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
             if(GUI.getPlayer2().getFleet().isEmpty()){
                 result=-3;
+                GUI.setWhosTurn();
             }
             else if (result == -1) {
                 GUI.setWhosTurn();
             }
-            
         } else {
             result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
             if (result == -1) {
                 GUI.setWhosTurn();
             }
         }
-
         GUI.infoState(result);
         updateColour(state);
         GUI.g1.updateAll();
         GUI.g2.updateAll();
-
     }
 
     private void updateColour(char state) {
@@ -121,21 +119,6 @@ public class CellPane extends JPanel {
         return new Dimension(30, 30);
     }
 
-//     public boolean isHit(int xcomp, int ycomp) {
-//         
-//        for (int i = 0; i < this.size; i++) {
-//            if (this.orientation == true) {
-//                if (this.x + i == xcomp && this.y == ycomp) {
-//                    return true;
-//                }
-//            } else {
-//                if (this.x == xcomp && this.y + i == ycomp) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
     public void setHidden() {
         this.hidden = true;
     }

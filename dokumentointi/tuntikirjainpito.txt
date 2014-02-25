@@ -56,7 +56,7 @@
  
 25.2	win-tilanne, toisen pelaajan kenttään ampuminen			3h
 	bugien korjailua						2h
-
+	testien korjaamista, pientä refactorointia			2h
 
 
 

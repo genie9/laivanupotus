@@ -9,27 +9,32 @@ public class Ship {
     private final int x;
     private final int y;
     private final int size;
-    private final boolean orientation; //true=vertical, false=horisontal
-//    private int[][] turvaAlue;
+    private final boolean position; //true=vertical, false=horisontal
+    private int[][] turvaAlue;
     private int health;
 
-    public Ship(int x, int y, int size, boolean orientation) {
+    public Ship(int x, int y, int size, boolean position) {
         this.x = x;
         this.y = y;
         this.size = size;
-        this.orientation = orientation;
+        this.position = position;
         this.health = size;
 
-        /*turva-alue ei ole vielä implementoitu
-         */
-//        for(int i = 0; i<koko; i++){
-//              if (this.suunta) {                          
+        /*turva-alue ei ole vielä implementoitu*/
+
+//        if (this.position) {
 //            this.turvaAlue = new int[3][size + 2];
-//            this.turvaAlue[x-1][y-1]=2;
-//        } else {                                    
-//            this.turvaAlue = new int[size + 2][3];  
+//        } else {
+//            this.turvaAlue = new int[size + 2][3];
 //        }
+//        for(int i = 0; i<this.turvaAlue.length; i++){
+//            for (int j = 0; j < this.turvaAlue[i].length; j++) {
+//                if(i < 10 && i >= 0 && j >= 0 && j < 10){
+//                    
+//                }
+//            }
 //        }
+
     }
 
     public int getX() {
@@ -44,8 +49,8 @@ public class Ship {
         return size;
     }
 
-    public boolean isOrientation() {
-        return orientation;
+    public boolean isPosition() {
+        return position;
     }
 
     public int getHealth() {
@@ -66,7 +71,7 @@ public class Ship {
      */
     public boolean isHit(int xcomp, int ycomp) {
         for (int i = 0; i < this.size; i++) {
-            if (this.orientation == true) {
+            if (this.position == true) {
                 if (this.x + i == xcomp && this.y == ycomp) {
                     return true;
                 }
@@ -81,13 +86,7 @@ public class Ship {
 
     @Override
     public String toString() {
-        String pos = "";
-        if (orientation) {
-            pos = "vertical";
-        } else {
-            pos = "horisontal";
-        }
-        return "x = " + this.x + ", y = " + this.y + ", koko = " + this.size + ", suunta = " + pos + ", health = " + this.health;
+        return "ship(" + this.x + "," + this.y + ")";
     }
 
 }

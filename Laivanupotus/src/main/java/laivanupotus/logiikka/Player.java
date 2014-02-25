@@ -37,7 +37,7 @@ public class Player {
 
     /**
      * Metodi arpoo tietyn kokoisen laivan sijainnin. Käyttää avukseen metodia
- placeShip().
+     * placeShip().
      *
      * @param size Syöte laivan koolle
      *
@@ -45,6 +45,9 @@ public class Player {
      * sijainti ei täytä vaatimuksia.
      */
     public Ship randomizeShip(int size) {            //tekoälylle
+        if (size < 1 || size >= area.length) {
+            return null;
+        }
         Ship s;
         boolean orientation = r.nextBoolean();
         if (orientation) {  //jos arvottu pystyyn
@@ -67,17 +70,17 @@ public class Player {
      * @param x Käyttäjän antama koordinaatti
      * @param y Käyttäjän antama koordinaatti
      * @param size Käyttäjän antama laivan koko
-     * @param orientation Käyttäjän antama laivan suunta
+     * @param position Käyttäjän antama laivan suunta
      * @return Laiva Palauttaa laivan onnistuessaan, muuten null
      *
      */
-    public Ship placeShip(int x, int y, int size, boolean orientation) {    //ihmispelaajalle
+    public Ship placeShip(int x, int y, int size, boolean position) {    //ihmispelaajalle
         if (size >= 1 && size < area.length) {
-            if (orientation) {
+            if (position) {
                 int xend = x + size - 1;
                 if (xend < area.length && x >= 0 && y >= 0 && y < area.length) {
-                    if (markOnX(x, y, xend)) {
-                        Ship ship = new Ship(x, y, size, orientation);
+                    if (markArea(x, y, xend, position)) {
+                        Ship ship = new Ship(x, y, size, position);
                         fleet.add(ship);
                         return ship;
                     }
@@ -85,8 +88,8 @@ public class Player {
             } else {
                 int yend = y + size - 1;
                 if (x < area.length && x >= 0 && y >= 0 && yend < area.length) {
-                    if (markOnY(x, y, yend)) {
-                        Ship ship = new Ship(x, y, size, orientation);
+                    if (markArea(x, y, yend, position)) {
+                        Ship ship = new Ship(x, y, size, position);
                         fleet.add(ship);
                         return ship;
                     }
@@ -95,47 +98,37 @@ public class Player {
         }
         return null;
     }
-
     /**
-     * Apumetodi laivojen asettamiselle pystysuuntaan. Metodi päivittää
+     * Apumetodi laivojen asettamiselle kentälle. Metodi päivittää
      * pelialueetta, kun laivoja asetetaan. Samalla tarkistaa ettei laiva joudu
      * varattuun paikkaan.
      *
      * @param x
      * @param y
      * @param end
+     * @param pos
      * @return true Onnistuessaan ja false, jos paikka on varattu
      */
-    private boolean markOnX(int x, int y, int end) {
-        for (int i = x; i <= end; i++) {
-            if (area[i][y] != '.') {
-                return false;
+    private boolean markArea(int x, int y, int end, boolean pos) {
+        if (pos) {
+            for (int i = x; i <= end; i++) {
+                if (area[i][y] != '.') {
+                    return false;
+                }
             }
-        }
-        for (int j = x; j <= end; j++) {
-            area[j][y] = 'S';
-        }
-        return true;
-    }
-
-    /**
-     * Apumetodi laivojen asettamiselle vaakasuuntaan. Metodi päivittää
-     * pelialueetta, kun laivoja asetetaan/arvotaan. Samalla tarkistaa ettei
-     * laiva joudu varattuun paikkaan.
-     *
-     * @param x
-     * @param y
-     * @param end
-     * @return true Onnistuessaan ja false, jos paikka on varattu
-     */
-    private boolean markOnY(int x, int y, int end) {
-        for (int i = y; i <= end; i++) {
-            if (area[x][i] != '.') {
-                return false;
+            for (int j = x; j <= end; j++) {
+                area[j][y] = 'S';
             }
-        }
-        for (int j = y; j <= end; j++) {
-            area[x][j] = 'S';
+        } 
+        else {
+            for (int i = y; i <= end; i++) {
+                if (area[x][i] != '.') {
+                    return false;
+                }
+            }
+            for (int j = y; j <= end; j++) {
+                area[x][j] = 'S';
+            }
         }
         return true;
     }
@@ -177,17 +170,6 @@ public class Player {
 
     public List<Ship> getFleet() {
         return fleet;
-    }
-
-    /**
-     * Testausta varten tulostaa laivaston kaikki alukset
-     *
-     * @param p Pelaaja
-     */
-    public void printFleat(Player p) {
-        for (Ship ship : p.getFleet()) {
-            System.out.println(ship);
-        }
     }
 
     public char[][] getArea() {
