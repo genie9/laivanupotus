@@ -2,6 +2,8 @@ package laivanupotus.laivanupotus;
 
 import laivanupotus.ui.GUI;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import laivanupotus.ui.TextUI;
 //import laivanupotus.logiikka.Laiva;
 //import laivanupotus.logiikka.Pelaaja;
@@ -9,9 +11,30 @@ import laivanupotus.ui.TextUI;
 public class App {
 
     public static void main(String[] args) {
+        try {
+            // Set cross-platform Java L&F (also called "Metal")
+        UIManager.setLookAndFeel(
+            UIManager.getCrossPlatformLookAndFeelClassName());
+    } 
+    catch (UnsupportedLookAndFeelException e) {
+       // handle exception
+    }
+    catch (ClassNotFoundException e) {
+       // handle exception
+    }
+    catch (InstantiationException e) {
+       // handle exception
+    }
+    catch (IllegalAccessException e) {
+       // handle exception
+    }
+        
+//    new SwingApplication(); //Create and show the GUI.
+
         GUI w = new GUI();
 
         SwingUtilities.invokeLater(w);
+    }
         
 //        TextUI ui = new TextUI(10);
 //        
@@ -62,4 +85,4 @@ public class App {
 //        }
 
     }
-}
+//}

@@ -47,42 +47,35 @@ public class CellPane extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                shoot();
+                if (GUI.canShoot) {
+                    shoot();
+                }
             }
         });
     }
 
     private void shoot() {
-////        int result = GUI.getPlayer(true).shoot(GUI.getPlayer(false), x, y);
-////        if (this.p == GUI.getPlayer(true)) {
-////            return;
-////        }
-////        if (result == -1) {
-////            GUI.setWhosTurn();
-//        Player pl = GUI.getPlayer(GUI.isWhosTurn());
-//        if (this.p == pl) {
-//            return;
-//        }
-        int result; //= pl.shoot(GUI.getPlayer(!GUI.whosTurn), x, y);
-//        if (result == -1) {
-//            GUI.setWhosTurn();
-//            GUI.cylonShoots();
-//        }
-                if (GUI.whosTurn) {
-                    result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
-                    if (result == -1) {
-                        GUI.setWhosTurn();
-                    }
-                } else {
-                    
-                    
-                    result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
-                    if (result == -1) {
-                        GUI.setWhosTurn();
-                    }
+        if (this.p == GUI.getPlayer(true)) {
+            return;
+        }
+        int result;
 
-                }
-        
+        if (GUI.whosTurn) {
+            result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
+            if(GUI.getPlayer2().getFleet().isEmpty()){
+                result=-3;
+            }
+            else if (result == -1) {
+                GUI.setWhosTurn();
+            }
+            
+        } else {
+            result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
+            if (result == -1) {
+                GUI.setWhosTurn();
+            }
+        }
+
         GUI.infoState(result);
         updateColour(state);
         GUI.g1.updateAll();

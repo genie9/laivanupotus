@@ -14,6 +14,7 @@ public class Player {
     private final String name;
     private char[][] area;
     private List<Ship> fleet;
+    public int shots;
 
     /**
      * Konstruktori luo pelialueen ko. pelaajalle sekä laivasto(fleet)
@@ -31,6 +32,7 @@ public class Player {
             }
         }
         this.fleet = new ArrayList<>();
+        this.shots = 0;
     }
 
     /**
@@ -164,11 +166,14 @@ public class Player {
      * @return ship.health Onnistuessa eli 0 - ship.size, muuten -1
      */
     public int shoot(Player p, int x, int y) {
+        
         if (p.getArea()[x][y] == '.') {
             p.getArea()[x][y] = 'x';
+            this.shots ++;
             return -1;
         }
         if (p.getArea()[x][y] == 'S') {
+            this.shots ++;
             for (Ship ship : p.getFleet()) {
                 if (ship.isHit(x, y)) {
                     ship.setHealth(ship.getHealth() - 1);

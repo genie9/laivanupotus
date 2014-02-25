@@ -1,7 +1,10 @@
 package laivanupotus.ui;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Random;
 import javax.swing.*;
 import laivanupotus.graphics.Grid;
@@ -23,6 +26,7 @@ public class GUI implements Runnable {
     private static JPanel info;
     public static Grid g1;
     public static Grid g2;
+    public static boolean canShoot;
 
     public GUI() {
         r = new Random();
@@ -33,6 +37,7 @@ public class GUI implements Runnable {
         g1 = new Grid(player1);
         g2 = new Grid(player2);
         g2.hideShips();
+        canShoot = false;
     }
 
     @Override
@@ -57,6 +62,7 @@ public class GUI implements Runnable {
         JPanel battleArea = new JPanel();
         battleArea.setLayout(new BoxLayout(battleArea, BoxLayout.PAGE_AXIS));
 
+//        battleArea.setBorder(BorderFactory.createLineBorder(Color.black));
         battleArea.add(g1);
         battleArea.add(g2);
         JPanel controls = informationArea();
@@ -104,8 +110,10 @@ public class GUI implements Runnable {
 
     public static void infoState(int state) {
         JLabel hit = (JLabel) info.getComponent(1);
-
-        if (state == -2) {
+        if(state == -3){
+            hit.setText("WIN!!");
+            canShoot = !canShoot;
+        }else if (state == -2) {
             hit.setText("ERROR! Shoot again");
         } else if (state == -1) {
             hit.setText("miss");
@@ -116,32 +124,36 @@ public class GUI implements Runnable {
         }
     }
 
-    public static void setWhosTurn() {
+    public static void setWhosTurn() {      
         whosTurn = !whosTurn;
+        JLabel turnInfo = (JLabel) info.getComponent(0);
         if (whosTurn) {
-            JLabel turnInfo = (JLabel) info.getComponent(0);
             turnInfo.setText("Player1 shoots!");
+            System.out.println("Player2: " + player2.shots + " shots, fleetSize "+ player2.getFleet().size() + ". Player1 shoots!");
         } else {
-            JLabel turnInfo = (JLabel) info.getComponent(0);
             turnInfo.setText("Player2 shoots!");
+            System.out.println("Player1: " + player1.shots + " shots, fleetSize "+ player1.getFleet().size() + ". Player2 shoots!");
             cylonShoots();
         }
     }
 
     public static void cylonShoots() {
-        int x = r.nextInt(10);
-        int y = r.nextInt(10);
-        int result = player2.shoot(player1, x, y);
-        infoState(result);
-//        Thread.sleep(1000);
-        g1.update(x, y, player1);
-        
-        if (result <= -1) {
-          setWhosTurn();
-          return;
+        int result = 0;
+        while (result > -1) {
+            int x = r.nextInt(10);
+            int y = r.nextInt(10);
+            result = player2.shoot(player1, x, y);
+            if(result == 0){
+                if(player1.getFleet().isEmpty()){
+                infoState(-3);
+            }
+            }
+            infoState(result);
+            g1.update(x, y, player1);
+//            Thread.sleep(1000);
+            
         }
-        
-        cylonShoots();
+        setWhosTurn();
     }
 
     public static boolean isWhosTurn() {

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import laivanupotus.ui.GUI;
 
 /**
  *
@@ -25,5 +26,6 @@ public class StartListener implements ActionListener{
       toDisable1.setEnabled(false);
       toDisable2.setEnabled(false);
       toVisible.setVisible(true);
+      GUI.canShoot = true;
     }
 }
