@@ -9,6 +9,7 @@ import laivanupotus.logiikka.Player;
 import laivanupotus.ui.GUI;
 
 /**
+ * Piirtää yksittäiset ruudut kenttään(Gridiin). Ruuduilla on mouselistener.
  *
  * @author Genie
  */
@@ -18,9 +19,21 @@ public class CellPane extends JPanel {
     private Color defbg;
     private int x, y;
     private Player p;
+    /**
+     * Ruudun väriä määrittelevä tila char:ina
+     */
     private char state;
+    /*  
+     * Ruudun näkyvyyttä määrittelevä tila
+     */
     private boolean hidden;
 
+    /**
+     *
+     * @param x Ruudun pystysuunnan koordinaatti
+     * @param y Ruudun vaakasuunnan koordinaatti
+     * @param p Ruudun omistava pelaaja
+     */
     public CellPane(int x, int y, Player p) {
         this();
         this.x = x;
@@ -30,13 +43,14 @@ public class CellPane extends JPanel {
         updateColour(state);
         this.hidden = false;
     }
-//char state
 
+    /**
+     * Luodan hiiren kuuntelijat
+     */
     public CellPane() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                //   background = getBackground();
                 setBackground(Color.BLUE);
             }
 
@@ -54,13 +68,19 @@ public class CellPane extends JPanel {
         });
     }
 
+    /**
+     * Hiirenklikkauksella ajaa Playerin shoot() metodia kyseiselle ruudulle.
+     * Jos ruutu on ampujan oma, ei tee mitään
+     *
+     */
     private void shoot() {
-        boolean cur = GUI.isWhosTurn();
+        boolean cur = GUI.whosTurn;
         if (this.p == GUI.getPlayer(cur)) {    //ei voi ampua omalle alueelle
             return;
         }
         int result;
 
+        /*yritys optimoida allaolevaa metodin osiota. ei toimi vielä*/
 //        result = GUI.getPlayer(cur).shoot(GUI.getPlayer(!cur), x, y);
 //        if (GUI.getPlayer(!cur).getFleet().isEmpty()) {
 //            result = -3;
@@ -103,6 +123,11 @@ public class CellPane extends JPanel {
         GUI.g2.updateAll();
     }
 
+    /**
+     * Asettaa ruudun halutun väriseksi.
+     *
+     * @param state
+     */
     private void updateColour(char state) {
         if (state == 'x') {
             background = Color.PINK;
@@ -141,7 +166,12 @@ public class CellPane extends JPanel {
         return new Dimension(30, 30);
     }
 
-    public void setHidden() {
-        this.hidden = true;
+    /**
+     * Piilottaa ruudun.
+     *
+     * @param state True - piilottaa ruudun, false laittaa näkyväksi.
+     */
+    public void setHidden(boolean state) {
+        this.hidden = state;
     }
 }

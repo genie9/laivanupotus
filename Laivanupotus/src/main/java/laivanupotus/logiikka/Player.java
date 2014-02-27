@@ -14,10 +14,14 @@ public class Player {
     private final String name;
     private final char[][] area;
     private final List<Ship> fleet;
+
+    /**
+     * Ilmaisee pelaajan ampumisen uuteen paikkaan ampuessa
+     */
     public int shots;
 
     /**
-     * Konstruktori luo pelialueen ko. pelaajalle sekä laivasto(fleet)
+     * Konstruktori luo pelialueen(area) ko. pelaajalle sekä laivasto(fleet)
      *
      * @param name Käyttäjän pelinimi
      * @param side Kentän koko
@@ -98,10 +102,11 @@ public class Player {
         }
         return null;
     }
+
     /**
-     * Apumetodi laivojen asettamiselle kentälle. Metodi päivittää
-     * pelialueetta, kun laivoja asetetaan. Samalla tarkistaa ettei laiva joudu
-     * varattuun paikkaan.
+     * Apumetodi laivojen asettamiselle kentälle. Metodi päivittää pelialueetta,
+     * kun laivoja asetetaan. Samalla tarkistaa ettei laiva joudu varattuun
+     * paikkaan.
      *
      * @param x
      * @param y
@@ -119,8 +124,7 @@ public class Player {
             for (int j = x; j <= end; j++) {
                 area[j][y] = 'S';
             }
-        } 
-        else {
+        } else {
             for (int i = y; i <= end; i++) {
                 if (area[x][i] != '.') {
                     return false;

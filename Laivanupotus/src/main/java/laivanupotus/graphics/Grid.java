@@ -9,13 +9,19 @@ import javax.swing.border.MatteBorder;
 import laivanupotus.logiikka.Player;
 
 /**
- *
+ * 
  * @author Genie
  */
 public class Grid extends JPanel {
     private final Player player;
     private final char[][] area;
 
+    /**
+     * Luodaan alueelle layout, johon sijoitetaan ruudut(CellPane:it).
+     * Alustetaan area pelaajan pelialuella. 
+     * 
+     * @param p Gridin omistava pelaaja
+     */
     public Grid(Player p) {
         this.player = p;
         this.area = p.getArea();
@@ -48,11 +54,21 @@ public class Grid extends JPanel {
         }
     }
 
+    /**
+     * Päivittää ruudun tilan annetuissa koordinaateissa.
+     * 
+     * @param x pystysuuntainen koordinaatti
+     * @param y vaakasuuntainen koordinaatti
+     * @param p Kentän omistava pelaaja
+     */
     public void update(int x, int y, Player p) {
         if(getPlayer()== p)
                 getCell(y * 10 + x).setState(area[x][y]);
             }
     
+    /**
+     * Päivittää kaikki gridin ruudut
+     */
     public void updateAll() {
         for (int i = 0; i < area.length; i++) {
             for (int j = 0; j < area.length; j++) {
@@ -65,12 +81,17 @@ public class Grid extends JPanel {
         return (CellPane) getComponent(coord);
     }
     
-    public void hideShips(){
+    /**
+     * Päivittää kaikkien gridin ruutujen hidden tilaa.
+     * @param state Käyttäjän antama syöte, true/false
+     */
+    public void hideShips(boolean state){
         for (int i = 0; i < area.length; i++) {
             for (int j = 0; j < area.length; j++) {
-                getCell(j * 10 + i).setHidden();
+                getCell(j * 10 + i).setHidden(state);
             }
         }
+        updateAll();
     }
 
     public Player getPlayer() {

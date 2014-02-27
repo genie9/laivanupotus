@@ -1,6 +1,7 @@
 package laivanupotus.logiikka;
 
 /**
+ * Luo Laiva-olion
  *
  * @author Genie
  */
@@ -10,31 +11,25 @@ public class Ship {
     private final int y;
     private final int size;
     private final boolean position; //true=vertical, false=horisontal
-    private int[][] turvaAlue;
+    /**
+     * Laivan kunto, alussa sama kuin koko.
+     */
     private int health;
 
+    /**
+     * Käyttäjän antamat/arvotut:
+     *
+     * @param x Laivan alun pystykoordinaatti
+     * @param y Laivan alun vaakakoordinaatti
+     * @param size Laivan koko
+     * @param position Laivan suunta, true-pystyssä, false-vaaka
+     */
     public Ship(int x, int y, int size, boolean position) {
         this.x = x;
         this.y = y;
         this.size = size;
         this.position = position;
         this.health = size;
-
-        /*turva-alue ei ole vielä implementoitu*/
-
-//        if (this.position) {
-//            this.turvaAlue = new int[3][size + 2];
-//        } else {
-//            this.turvaAlue = new int[size + 2][3];
-//        }
-//        for(int i = 0; i<this.turvaAlue.length; i++){
-//            for (int j = 0; j < this.turvaAlue[i].length; j++) {
-//                if(i < 10 && i >= 0 && j >= 0 && j < 10){
-//                    
-//                }
-//            }
-//        }
-
     }
 
     public int getX() {
@@ -88,5 +83,18 @@ public class Ship {
     public String toString() {
         return "ship(" + this.x + "," + this.y + ")";
     }
-
 }
+
+        /*turva-alue ei ole vielä implementoitu*/
+//        if (this.position) {
+//            this.turvaAlue = new int[3][size + 2];
+//        } else {
+//            this.turvaAlue = new int[size + 2][3];
+//        }
+//        for(int i = 0; i<this.turvaAlue.length; i++){
+//            for (int j = 0; j < this.turvaAlue[i].length; j++) {
+//                if(i < 10 && i >= 0 && j >= 0 && j < 10){
+//                    
+//                }
+//            }
+//        }

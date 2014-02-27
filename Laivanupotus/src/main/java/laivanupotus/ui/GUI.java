@@ -2,13 +2,14 @@ package laivanupotus.ui;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.util.Random;
 import javax.swing.*;
 import laivanupotus.graphics.Grid;
 import laivanupotus.listeners.HideShipsListener;
 import laivanupotus.listeners.ShipRandomizerListener;
 import laivanupotus.listeners.StartListener;
+import laivanupotus.listeners.EndGameListener;
+import laivanupotus.listeners.NewGameListener;
 import laivanupotus.logiikka.Player;
 
 /**
@@ -17,15 +18,22 @@ import laivanupotus.logiikka.Player;
  */
 public class GUI implements Runnable {
 
-    private JFrame frame;
+    public static JFrame frame;
+
+    private JMenuBar menuBar;
+    private JMenu actions;
+    private JMenuItem newGame;
+    private JMenuItem exitGame;
     private static Random r;
     private static Player player1;
     private static Player player2;
-    public static boolean whosTurn;
-    private static JPanel info;
     public static Grid g1;
     public static Grid g2;
+    private static JPanel info;
+    public static JButton start;
+    public static JButton randomize;
     public static boolean canShoot;
+    public static boolean whosTurn;
     public static boolean pvp;
     public static boolean win;
 
@@ -33,11 +41,10 @@ public class GUI implements Runnable {
         r = new Random();
         player1 = new Player("Test", 10);
         player2 = new Player("tapettava", 10);
-        whosTurn = true;
-        info = new JPanel();
         g1 = new Grid(player1);
         g2 = new Grid(player2);
         canShoot = false;
+        whosTurn = true;
         pvp = false;
         win = false;
     }
@@ -49,10 +56,29 @@ public class GUI implements Runnable {
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        frame.setJMenuBar(menuBar());
+
         createComponents(frame.getContentPane());
 
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private JMenuBar menuBar() {
+        menuBar = new JMenuBar();
+
+        actions = new JMenu("Action");
+        menuBar.add(actions);
+
+        newGame = new JMenuItem("New game");
+        newGame.addActionListener(new NewGameListener());
+        exitGame = new JMenuItem("Exit game");
+        exitGame.addActionListener(new EndGameListener());
+
+        actions.add(newGame);
+        actions.add(exitGame);
+
+        return menuBar;
     }
 
     private void createComponents(Container container) {
@@ -64,35 +90,58 @@ public class GUI implements Runnable {
         JPanel battleArea = new JPanel();
         battleArea.setLayout(new BoxLayout(battleArea, BoxLayout.PAGE_AXIS));
 
-//        battleArea.setBorder(BorderFactory.createLineBorder(Color.black));
         battleArea.add(g1);
         battleArea.add(g2);
-        JPanel controls = informationArea();
 
         /*mainLayout container*/
         container.add(battleArea);
-        container.add(controls);
+        container.add(informationArea());
     }
 
-    public static JPanel informationArea() {
-        /*right side - informationArea*/
+    /**
+     * Peli-ikkunan oikea puoli. Sisältää informaation ja pelin ohjauksen.
+     *
+     * @return JPanel controls
+     */
+    public JPanel informationArea() {
         JPanel controls = new JPanel();
 
         controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
         controls.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 50));
         controls.add(Box.createHorizontalGlue());
 
-        JLabel welcome = new JLabel("Welcome to fight for your glory! \n");
+        JButton ready = new JButton("Ready");           //ei voi ampua ennen kun laivat on kentällä
+        ready.addActionListener(new HideShipsListener());
 
-        JButton randomize = new JButton("Player1 \n Create yar fleet");
-        randomize.addActionListener(new ShipRandomizerListener(player1, 5, g1));
+        controls.add(new JLabel("Welcome to fight for your glory! \n"));
+        controls.add(Box.createRigidArea(new Dimension(0, 100)));
+        controls.add(randomize());
+        controls.add(Box.createRigidArea(new Dimension(0, 20)));
+        controls.add(ready);
+        controls.add(Box.createRigidArea(new Dimension(0, 20)));
+        controls.add(info());
+        controls.add(Box.createRigidArea(new Dimension(0, 100)));
+        controls.add(start());
+        controls.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JButton start = new JButton("Start game!");
-        if (!pvp) {
-            start.addActionListener(new ShipRandomizerListener(player2, 5, g2));
-        }
-        start.addActionListener(new StartListener(randomize, start, info));
+        return controls;
+    }
 
+    /**
+     * informatioArean nappi
+     */
+    private JButton randomize() {
+        randomize = new JButton("Player1, Create yar fleet");
+        randomize.addActionListener(new ShipRandomizerListener(player1, 6, g1));
+        return randomize;
+    }
+
+    /**
+     * informatioArean alue
+     */
+    private JPanel info() {
+        info = new JPanel();
+        info.setVisible(false);
         info.setLayout(new BoxLayout(info, BoxLayout.PAGE_AXIS));
 
         JLabel turnInfo = new JLabel("Player1 shoots! \n");
@@ -100,28 +149,27 @@ public class GUI implements Runnable {
 
         info.add(turnInfo);
         info.add(state);
-
-        JButton invisible = new JButton("Change player");
-        invisible.addActionListener(new HideShipsListener());
-
-        invisible.setVisible(pvp);  // asettaa näkyväksi kaksinpelissä
-
-        controls.add(welcome);
-        controls.add(Box.createRigidArea(new Dimension(0, 100)));
-        controls.add(randomize);
-        controls.add(Box.createRigidArea(new Dimension(0, 20)));
-
-        controls.add(start);
-        controls.add(Box.createRigidArea(new Dimension(0, 20)));
-
-        info.setVisible(false);
-        controls.add(info);
-        controls.add(Box.createRigidArea(new Dimension(0, 100)));
-        controls.add(invisible);
-        controls.add(Box.createRigidArea(new Dimension(0, 20)));
-        return controls;
+        return info;
     }
 
+    /**
+     * informatioArean nappi
+     */
+    private JButton start() {
+        start = new JButton("Start game!");
+        start.setEnabled(false);
+        if (!pvp) {
+            start.addActionListener(new ShipRandomizerListener(player2, 6, g2));
+        }
+        start.addActionListener(new StartListener(randomize, start, info));
+        return start;
+    }
+
+    /**
+     * Metodi saa tietoa ampumisen tuloksesta ja päivittää info():n
+     *
+     * @param state
+     */
     public static void infoState(int state) {
         JLabel hit = (JLabel) info.getComponent(1);
         if (state == -3) {
@@ -138,29 +186,39 @@ public class GUI implements Runnable {
         }
     }
 
+    /**
+     * Metodi päivittää booleania whosTurn ja infon() esitystä pelivuorosta.
+     * Metodi myös laittaa kutsuu AI:n shoot() metodia.
+     */
     public static void setWhosTurn() {
         whosTurn = !whosTurn;
-        JLabel turnInfo = (JLabel) info.getComponent(0);
-        if (whosTurn) {
-            if (win) {
-                turnInfo.setText("Player1");
-                return;
-            }
-            turnInfo.setText("Player1 shoots!");
-            System.out.println("Player2: " + player2.shots + " shots, fleetSize " + player2.getFleet().size() + ". Player1 shoots!");
-        } else {
-            if (win) {
-                turnInfo.setText("Player2");
-                return;
-            }
-            turnInfo.setText("Player2 shoots!");
-            System.out.println("Player1: " + player1.shots + " shots, fleetSize " + player1.getFleet().size() + ". Player2 shoots!");
-            if (!pvp) {
-                cylonShoots();
+        if (canShoot) {
+            JLabel turnInfo = (JLabel) info.getComponent(0);
+            if (whosTurn) {
+                if (win) {
+                    turnInfo.setText("Player2");
+                    return;
+                }
+                turnInfo.setText("Player1 shoots!");
+                System.out.println("Player2: " + player2.shots + " shots, fleetSize " + player2.getFleet().size() + ". Player1 shoots!");
+            } else {
+                if (win) {
+                    turnInfo.setText("Player1");
+                    return;
+                }
+                turnInfo.setText("Player2 shoots!");
+                System.out.println("Player1: " + player1.shots + " shots, fleetSize " + player1.getFleet().size() + ". Player2 shoots!");
+                if (!pvp) {
+                    cylonShoots();
+                }
             }
         }
     }
-    
+
+    /**
+     * AI:n ampuminen. Täysin randomoitu toiminnallisuus. Käyttää Playerin
+     * shoot() metodia. Vaihtaa pelivuoroa ja päivittää infoStatea().
+     */
     public static void cylonShoots() {
         int result = 0;
         while (result > -1) {
@@ -178,10 +236,13 @@ public class GUI implements Runnable {
         setWhosTurn();
     }
 
-    public static boolean isWhosTurn() {
-        return whosTurn;
-    }
-
+    /**
+     * Metodin tarkoitus ole korvata getPlayer1 ja getPlayer2 metodeja. Toimii
+     * vaihtelevasti syystä tuntematon.
+     *
+     * @param who
+     * @return player1 Jos true, player2, jos false
+     */
     public static Player getPlayer(boolean who) {
         if (true) {
             return player1;
@@ -201,36 +262,3 @@ public class GUI implements Runnable {
         return frame;
     }
 }
-//    public static JButton randomize() {
-//        JButton randomize = null;
-//      if (randomize == null) {
-//          randomize = new JButton("Player1, Create yar fleet");
-//          randomize.addActionListener(new ShipRandomizerListener(player1, 5, g1));
-//      }
-//        return randomize;
-//    }
-
-//    private static JButton goInvisible() {
-//        JButton invisible = new JButton("Change player");
-//        invisible.addActionListener(new HideShipsListener());
-//
-//        invisible.setVisible(pvp);  // asettaa näkyväksi kaksinpelissä
-//
-//        return invisible;
-//    }
-
-//    public static void changePlayer() {
-//        
-//        if (whosTurn) {
-//            g1.hideShips();
-//        }
-//        else{
-//            g2.hideShips();
-//        }
-//        if(!canShoot){
-//            randomize().setText("Player2, Create yar fleet");
-////          randomize().removeAll();
-//            randomize().addActionListener(new ShipRandomizerListener(player2, 5, g2));
-//        }
-//    }
-    
