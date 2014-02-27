@@ -6,7 +6,7 @@ K‰ytt‰j‰t: Pelaaja/pelaajat
 Kaikkien k‰ytt‰jien toiminnot:
 
 -pelityypin vavitseminen: (pvp tai) p vs bot, (laivojen m‰‰r‰n mukaan (esim.5-10))
--laivojen j‰rjest‰minen/arpominen pelialueelle
+-laivojen arpominen pelialueelle
 -ampumakoordinaattien valitseminen hiirt‰ k‰ytt‰en
 
 Teko‰lyn toiminnot:

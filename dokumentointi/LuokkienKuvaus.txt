@@ -1,0 +1,10 @@
+Laiva ja Pelaaja
+	Luodaan pelin logiikkaa. 
+	Laiva vastaa laiva-olion sijoituksesta ja kunnosta.
+	Pelaajassa luodaan pelaajalle oma pelikentä kaksiuloitteisen arrayn avulla. 
+	Luodaan myös toiminnallisuus laivojen sijoittamiselle ja ampumiselle.
+	
+Grid ja CellPane
+	Luodaan graafinen esitys pelaajan pelikentälle. Kummatkin luokat ovat yhteydessä Pelaajaan.
+	Grid luokka luo 10x10 CellPane-objektia. CellPane kutsuu Player-luokan shoot() metodia hiirenkuuntelijalla.
+	

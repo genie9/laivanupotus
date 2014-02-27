@@ -1,0 +1,10 @@
+Peliohjeet
+	
+	Avaa peli ja seuraa ohjeita.
+	
+	Pelaat tietokonetta vastaan.
+	Peli arpoo kummatkin pelialueet
+	Laivat voivat olla kiinni toisissa.
+	Osuessa saat ampua uudestaan.
+	
+	Menuvalikossa voit valita uuden pelin.

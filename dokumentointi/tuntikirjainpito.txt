@@ -62,3 +62,7 @@
 	toimimaan kuuntelija ja nappia, joka piilotais toisen laivat
 	ja laittais toisen näkyväksi					4h
 
+27.2	vielä uudella lähestymisellä pvp-peliin, mutta edelleen sama 
+	ongelma. Logiikkaa tuntuu olevan oikea, mutta ei näköään 
+	tarpeeksi. Korjattu loput puutteet pelistä. JavaDocit tehty
+	loppuun. Luokkakaavio uusiks. ym. loppupalautuksen hiontaa	8h
