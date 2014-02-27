@@ -3,7 +3,6 @@ package laivanupotus.graphics;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
@@ -53,7 +52,6 @@ public class Grid extends JPanel {
         if(getPlayer()== p)
                 getCell(y * 10 + x).setState(area[x][y]);
             }
-        
     
     public void updateAll() {
         for (int i = 0; i < area.length; i++) {
@@ -73,7 +71,6 @@ public class Grid extends JPanel {
                 getCell(j * 10 + i).setHidden();
             }
         }
-        
     }
 
     public Player getPlayer() {

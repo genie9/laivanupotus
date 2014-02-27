@@ -7,10 +7,11 @@ import javax.swing.JPanel;
 import laivanupotus.ui.GUI;
 
 /**
- *
+ * 
  * @author Genie
  */
-public class StartListener implements ActionListener{
+public class StartListener implements ActionListener {
+
     private final JButton toDisable1;
     private final JButton toDisable2;
     private final JPanel toVisible;
@@ -23,9 +24,12 @@ public class StartListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-      toDisable1.setEnabled(false);
-      toDisable2.setEnabled(false);
-      toVisible.setVisible(true);
-      GUI.canShoot = true;
+        if (!GUI.pvp) {
+            GUI.g2.hideShips();
+        }
+        toDisable1.setEnabled(false);
+        toDisable2.setEnabled(false);
+        toVisible.setVisible(true);
+        GUI.canShoot = true;
     }
 }

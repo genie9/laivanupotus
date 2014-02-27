@@ -55,25 +55,47 @@ public class CellPane extends JPanel {
     }
 
     private void shoot() {
-        if (this.p == GUI.getPlayer(true)) {
+        boolean cur = GUI.isWhosTurn();
+        if (this.p == GUI.getPlayer(cur)) {    //ei voi ampua omalle alueelle
             return;
         }
         int result;
 
+//        result = GUI.getPlayer(cur).shoot(GUI.getPlayer(!cur), x, y);
+//        if (GUI.getPlayer(!cur).getFleet().isEmpty()) {
+//            result = -3;
+//            GUI.win = true;
+//            GUI.setWhosTurn();
+//        } else if (result == -1) {
+//            if (!GUI.pvp) {
+//                GUI.setWhosTurn();
+//            }
+//        }
         if (GUI.whosTurn) {
             result = GUI.getPlayer1().shoot(GUI.getPlayer2(), x, y);
-            if(GUI.getPlayer2().getFleet().isEmpty()){
-                result=-3;
+            if (GUI.getPlayer2().getFleet().isEmpty()) {
+                result = -3;
+                GUI.win = true;
                 GUI.setWhosTurn();
-            }
-            else if (result == -1) {
-                GUI.setWhosTurn();
+            } else if (result == -1) {
+                if (!GUI.pvp) {
+                    GUI.setWhosTurn();
+                }
+
             }
         } else {
             result = GUI.getPlayer2().shoot(GUI.getPlayer1(), x, y);
-            if (result == -1) {
+            if (GUI.getPlayer1().getFleet().isEmpty()) {
+                result = -3;
+                GUI.win = true;
                 GUI.setWhosTurn();
             }
+            if (result == -1) {
+                if (!GUI.pvp) {
+                    GUI.setWhosTurn();
+                }
+            }
+
         }
         GUI.infoState(result);
         updateColour(state);
