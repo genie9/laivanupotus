@@ -1,0 +1,12 @@
+Testausdokumentti 
+
+Pelilogiikan testauksen tukena käytin tekstikäyttöliittymää, jolla sai tarkistettua 
+laivojen asettamisen ja ampumisen. Käyttöliittymä ajaessaan tulosti mm. kummankin 
+pelaajan laivaston koon, laivojen koordinaatit ja kunnon, vuorossa olevan pelaajan,
+laukauksien määrän ym. Lopullisesta työstä kyseinen luokka on poistettu. 
+
+Graafista käyttöliittymää testasin periaatteessa samalla tavalla, kuin 
+tekstikäyttöliittymällä. Lisäksi tulostin nappien ja tekstikenttien nimet kuuntelijoissa 
+nähdäkseen menevätkö käskyt perille. Joka muutoksen jälkeen GUI ajettiin ja 
+toiminnallisuus testattiin, seuraten samalla että haluttu muutos ei riko jo toimivaa 
+ominaisuutta. Tämä oli varsinkin tärkeä, kun yritin toteuttaa pvp peliä.
